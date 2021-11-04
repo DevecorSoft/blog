@@ -1,12 +1,14 @@
 # docker ubuntu
 
+try to use zsh inside a docker ubuntu on windows, because I don't like cmd/powershell on windows
+
 ## start
 
 ```sh
-docker run -itd -v D:/ubuntu-home:/root/share --name=elegant-ubuntu ubuntu
+docker run -itd -v D:/ubuntu-home:/root/share --name=elegant-ubuntu -p 8000:8000 -p 8001:8001 -p 8002:8002 ubuntu
 ```
 
-## enter ubuntu in container
+## first enter ubuntu in container
 
 ```sh
 docker exec -it elegant-ubuntu bash
