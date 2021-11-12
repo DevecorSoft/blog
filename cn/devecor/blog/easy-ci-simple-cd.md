@@ -51,11 +51,11 @@ Continuous delivery can help large organizations become as lean, agile and innov
 
 ### 代码复用
 
-|                                                                             | github actions                                                                                         | jenkins            |
-| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------ |
-| 自定义脚本`sh script.sh`                                                    | :white_check_mark:                                                                                     | :white_check_mark: |
-| [扩展共享库](https://www.jenkins.io/zh/doc/book/pipeline/shared-libraries/) | :-1:                                                                                                   | :+1:               |
-| marketplace                                                                 | [actions marketplace](https://github.com/marketplace?category=&query=&type=actions&verification=) :+1: |                    |
+|                          | github actions                                                                                         | jenkins                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| 自定义脚本`sh script.sh` | :white_check_mark:                                                                                     | :white_check_mark:                                                               |
+| 库共享                   | [reusing workflows](https://docs.github.com/cn/actions/learn-github-actions/reusing-workflows) :-1:    | [共享扩展库](https://www.jenkins.io/zh/doc/book/pipeline/shared-libraries/) :+1: |
+| marketplace              | [actions marketplace](https://github.com/marketplace?category=&query=&type=actions&verification=) :+1: |                                                                                  |
 
 ### conclusion
 
@@ -66,11 +66,123 @@ jenkins 看起来是一个更加成熟的工具
 
 ### workflows
 
-[生命周期]
+```mermaid
+flowchart LR
+  event --> Jobs
+  subgraph Jobs
+    direction TB
+    Job1 --> Job2 --> a[...]
+  end
+```
+
+```mermaid
+flowchart LR
+  Job -.- Runner
+  subgraph Runner
+    subgraph aa[Steps]
+      direction TB
+      aaa[step1] --> ab[step2] --> b[...]
+    end
+  end
+```
+
+```yaml
+name: blog cd
+on:    # on event
+  push:
+    branches: [main]
+jobs:    # job
+  publish:    # job name
+    runs-on: ubuntu-latest    # 分配运行器
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4    # 调用第三方action
+      
+      - name: Publish
+        run: echo "hello world"    # 执行命令或脚本
+```
+
+### pipline
+```mermaid
+flowchart LR
+  onTrigger --> agent
+  subgraph agent
+    subgraph stages
+      direction TB
+      subgraph stage1
+        steps
+      end
+      subgraph stage1
+        steps
+      end
+      stage1 --> stage2
+    end
+  end
+```
+
+```Groovy
+pipeline {
+  agent any    // 运行环境
+  stages {    // 阶段
+    stage('Build') {    // 拥有一个name
+      steps {    // 步骤 不配拥有name
+        sh '''
+            chmod a+x gradlew
+            ./gradlew build
+        '''
+      }
+    }
+  }
+}
+```
+
 
 ## simple cd
 
-[scp]
+```mermaid
+flowchart TB
+  step1[stop service] --> step2[scp target] --> step3[restart service]
+```
+
+## web-home ci/cd
+
+```mermaid
+flowchart LR
+  subgraph gWebHome[web-home]
+    eInstall[npm install] -->
+    eBuild[npm run build --modern]
+  end
+  subgraph gBlog[blog]
+    eCheckout[check out blog]
+  end
+  subgraph gUpimage[upimage]
+    direction TB
+    eUpimageX[chmod a+x ./gradlew] -->
+    eUpimageBuild[./gradlew build] -->
+    eUpimageNativeBuild[./gradlew nativeBuild]
+  end
+  subgraph gServer[ubuntu server]
+    subgraph gNginx[nginx]
+      subgraph gWebServer[web server]
+      end
+      subgraph gReverseProxy[reverse proxy]
+      end
+    end
+    subgraph gServerUpimage[upimage]
+    end
+  end
+  subgraph gService[service]
+    web-home
+    statics
+    mirrors
+    upimage
+  end
+  gWebHome --scp--> gWebServer --expose-80--> web-home
+  gUpimage --scp--> gServerUpimage  --expose--> upimage
+  gBlog --scp--> gWebServer
+  gReverseProxy --expose--> statics
+  gReverseProxy --expose--> mirrors
+```
 
 ## 痛点
 
