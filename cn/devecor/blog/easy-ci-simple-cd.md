@@ -197,5 +197,6 @@ flowchart LR
      * 云端配上webhook :moneybag:
 
 2. 依赖多，下载耗时
+  * jenkins: agent 指定为合适的docker image
 
 3. 测试冗长
