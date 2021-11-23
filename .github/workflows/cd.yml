@@ -21,7 +21,7 @@ jobs:
           ssh-add ~/.ssh/id_ed25519
           ssh-keyscan "devecor.cn" >> ~/.ssh/known_hosts
       
-      - name: Publish
+      - name: Publish blog
         run: |
           ssh root@devecor.cn "mkdir -p ${{ secrets.BLOG_HOME }}"
           rsync -r $PWD/cn/devecor/blog/ root@devecor.cn:${{ secrets.BLOG_HOME }}blog@next
@@ -29,3 +29,6 @@ jobs:
             rm -r ${{ secrets.BLOG_HOME }}blog;
             mv ${{ secrets.BLOG_HOME }}blog@next ${{ secrets.BLOG_HOME }}blog;
           "
+
+      - name: Delete ssh-key
+        run: rm ~/.ssh/id_ed25519
