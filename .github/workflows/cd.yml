@@ -11,10 +11,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2.3.4
+
+      - name: Install ssh-key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_ed25519
+          ssh-keyscan "devecor.cn" >> ~/.ssh/known_hosts
       
       - name: Publish
         run: |
-          git clone https://github.com/clarkwang/passh.git
-          gcc ./passh/passh.c -o passhe
-          ./passhe -p '${{ secrets.TENCENT_CLOUD_TOKEN }}' scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -r $PWD/cn/devecor/blog/ ubuntu@devecor.cn:${{ secrets.BLOG_HOME }}blognew
-          ./passhe -p '${{ secrets.TENCENT_CLOUD_TOKEN }}' ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@devecor.cn "rm -r ${{ secrets.BLOG_HOME }}blog; mv ${{ secrets.BLOG_HOME }}blognew ${{ secrets.BLOG_HOME }}blog"
+          ssh root@devecor.cn "mkdir -p ${{ secrets.BLOG_HOME }}"
+          rsync -r $PWD/cn/devecor/blog/ root@devecor.cn:${{ secrets.BLOG_HOME }}blog@next
+          ssh root@devecor.cn "
+            rm -r ${{ secrets.BLOG_HOME }}blog;
+            mv ${{ secrets.BLOG_HOME }}blog@next ${{ secrets.BLOG_HOME }}blog;
+          "
