@@ -115,6 +115,19 @@ github actions 提供[依赖缓存](https://docs.github.com/cn/actions/advanced-
 * 在ci中发布github release
   * 可使用`actions/upload-release-asset`上传到github release
 
+```yaml
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ env.UPLOAD_URL }}
+          asset_path: ./build/libs/upimage-${{ env.UPIMAGE_VERSION }}.jar
+          asset_name: upimage-${{ env.UPIMAGE_VERSION }}.jar
+          asset_content_type: application/zip
+```
+
+![image.png](http://statics.devecor.cn/1642248127587/image.png)
 
 ## pipeline技巧篇
 
