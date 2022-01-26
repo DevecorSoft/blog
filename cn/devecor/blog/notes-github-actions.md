@@ -3,6 +3,7 @@
 100实用小技巧，希望能写到100个
 
 - [Github actions 的100个实用技巧](#github-actions-的100个实用技巧)
+  - [动机篇](#动机篇)
   - [actions技巧篇](#actions技巧篇)
     - [1. 跨job的数据共享](#1-跨job的数据共享)
     - [2.依赖缓存](#2依赖缓存)
@@ -13,6 +14,24 @@
     - [2.版本号提升验证](#2版本号提升验证)
   - [优雅的第三方Actions](#优雅的第三方actions)
     - [1.覆盖率徽章](#1覆盖率徽章)
+
+## 动机篇
+
+github actions因具有一下优点而深受笔者喜爱
+
+* 源代码旁直接构建流水线
+* 没有额外的服务器成本，github官方会提供性能可观的运行器
+* actions marketplace 具有生态优势
+
+支持的运行器和硬件资源
+
+| Windows/Linux      | MaxOS              |
+| ------------------ | ------------------ |
+| 2 核 CPU           | 3 核 CPU           |
+| 7 GB RAM 内存      | 14 GB RAM 内存     |
+| 14 GB SSD 硬盘空间 | 14 GB SSD 硬盘空间 |
+
+当然，这并不代表github acitons没有缺点，相反，其缺点又多又明显，本文不再列举。总之，上面列举的三个优点足以让笔者忽视/忍受各种已知的缺点。
 
 ## actions技巧篇
 
@@ -33,9 +52,11 @@ flowchart LR
    upload -.post.-> api -.get.-> download
 ```
 
-最简单的方式莫过于利用github提供的artifacts. 即在上游job中将数据或者配置打印成文本文件，利用[actions/upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)上传至artifact。下游job中利用[actions/download-artifact](https://github.com/marketplace/actions/download-a-build-artifact)下载
+最简单的方式莫过于利用github提供的artifacts. 即在上游job中将数据或者配置打印成文本文件(你当然能够选择任何压缩格式)，利用[actions/upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)上传至artifact。下游job中利用[actions/download-artifact](https://github.com/marketplace/actions/download-a-build-artifact)下载
 
 也许笔者应该在此处提供一个例子:
+
+> :memo: **Note:** 简单起见，还是让例子简单一点
 
 ```yaml
   job1:
@@ -95,6 +116,8 @@ github actions 提供[依赖缓存](https://docs.github.com/cn/actions/advanced-
 | pip, pipenv      | setup-python               |
 | gradle, maven    | setup-java                 |
 | ruby gems        | setup-ruby                 |
+
+note that：如果你的每次提交都会变更项目配置文件(package.json,pom.xml,build.gradle.kts等), 缓存会失效，原因是默认将这些文件哈希值（`hashFiles`）作为`key`, 此时你需要直接使用`action/cache`并提供自己的`key`
 
 
 ### 3.ci红绿状态徽章
