@@ -65,25 +65,21 @@ As long as it launched, we can jump to ubuntu terminal with `multipass shell`, t
 
   `source ~/.zshrc`
 
-After restarting your intellij idea, All `ApiTests` should just work.
+After restarting your intellij idea, All intergration test based `testcontainer` should just work.
 
 ## Install docker cli and compose on MAC
 
-* Install docker cli on mac with `brew install docker`
-* Install docker compose 
-  ```
-  mkdir -p ~/.docker/cli-plugins/
-  curl -SL https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-darwin-x86_64 -o ~/.docker/cli-plugins/docker-compose
-  chmod +x ~/.docker/cli-plugins/docker-compose
-  ```
-  __note that__ if you are using `Apple m1 chip`, please replace the command above with `darwin-aarch64`
-  ```
-  curl -SL https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-darwin-aarch64 -o ~/.docker/cli-plugins/docker-compose
-  ```
-* Test your installation
-  ```
-  $ docker compose version
-  Docker Compose version v2.2.3
-  ```
+```
+brew install docker docker-compose
+```
 
- Everything with docker should be fine. However, Keep in mind that your VPN won't be shared with vm.
+## [optional] Configure `vmhost` for docker on MAC
+
+We have to access to docker containner manually sometimes. And I hate to connect running containner with ip address.
+A viable alternative to `localhost` is mapping your docker machine ip to `vmhost`:
+
+```
+sudo echo "192.168.64.2    vmhost" >> /etc/hosts
+```
+
+Everything with docker should be fine. However, Keep in mind that your VPN won't be shared with vm.
