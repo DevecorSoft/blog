@@ -1,7 +1,7 @@
 # blog
 publish blogs by devecor
 
-any blog inside `/cn/devecor/blog` will be published to [devecor.cn](http://www.devecor.cn)
+any blog inside `/cn/devecor/blog` will be published to [devecor.cn](https://devecor.cn)
 
 ## blog style
 

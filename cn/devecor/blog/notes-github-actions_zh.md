@@ -122,7 +122,7 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 
 ### 3.ci红绿状态徽章
 看起来是这样：  
-![image.png](http://statics.devecor.cn/1642245128077/image.png)
+![image.png](https://devecor.cn/image/1642245128077/image.png)
 
 只要workflow存在，github就会为你生成状态徽章，可利用以下规则在readme中引用（在项目的actions里点击`Create status badge`复制链接最简单)
 
@@ -150,7 +150,7 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
           asset_content_type: application/zip
 ```
 
-![image.png](http://statics.devecor.cn/1642248127587/image.png)
+![image.png](https://devecor.cn/image/1642248127587/image.png)
 
 ## pipeline技巧篇
 
@@ -191,7 +191,7 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 
 如果可以在readme文件里看到你的项目有极高的测试覆盖率是否能给你带来信心？
 
-![image.png](http://statics.devecor.cn/1642247668658/image.png)
+![image.png](https://devecor.cn/image/1642247668658/image.png)
 
 actions 地址: [cicirello/jacoco-badge-generator](https://github.com/marketplace/actions/jacoco-badge-generator)
 
