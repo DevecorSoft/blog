@@ -28,7 +28,7 @@ jobs:
           ssh root@devecor.cn "
             rm ${{ secrets.BLOG_HOME }}blog/*;
             cp ${{ secrets.BLOG_HOME }}blog@next/* ${{ secrets.BLOG_HOME }}blog;
-            rm -r ${{ secrets.BLOG_HOME }}blog@next/*;
+            rm -r ${{ secrets.BLOG_HOME }}blog@next;
           "
 
       - name: Delete ssh-key
