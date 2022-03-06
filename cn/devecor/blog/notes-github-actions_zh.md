@@ -12,6 +12,9 @@
   - [pipeline技巧篇](#pipeline技巧篇)
     - [1.安装ssh-keys](#1安装ssh-keys)
     - [2.版本号提升验证](#2版本号提升验证)
+  - [实践技巧篇](#实践技巧篇)
+    - [1. 自托管runner的时机](#1-自托管runner的时机)
+    - [2. 用以效率化脚本测试](#2-用以效率化脚本测试)
   - [优雅的第三方Actions](#优雅的第三方actions)
     - [1.覆盖率徽章](#1覆盖率徽章)
 
@@ -166,7 +169,7 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
           chmod 600 ~/.ssh/id_ed25519
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_ed25519
-          ssh-keyscan "${{ secrets.TARGET_SERVER }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -H "${{ secrets.TARGET_SERVER }}" >> ~/.ssh/known_hosts
 ```
 
 部署结束时一定不要忘了移除运行器的ssh-key凭证
@@ -183,6 +186,24 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 这里笔者提倡每次提交都要手动提升版本号，否则ci将会失败。
 
 我们可以使用git tag来标记最新版本，在ci里从配置文件里取出版本号与git tag进行对比确定是否正确提升了版本
+
+
+## 实践技巧篇
+
+### 1. 自托管runner的时机
+
+* 私仓，商业团队使用,超出免费的500M/2000分钟额度并希望节省成本之时。
+* 希望保护在ci中使用的secrets之时。
+
+建议不要使用自托管运行器的情况：
+
+* 不能科学上网的网络环境：提交签出极为耗时
+
+### 2. 用以效率化脚本测试
+
+很多时候笔者会为无脑重复的操作写一个效率化脚本, github actions能提供一个良好的测试环境，特别是Mac os是个比较难得的测试环境。比如下面的例子：
+
+1. mac一行命令安装一个[docker的代替品](https://github.com/DevecorSoft/DockerDesktopAlternative)：这个项目利用了github actions提供的`macos-latest`测试环境
 
 
 ## 优雅的第三方Actions
