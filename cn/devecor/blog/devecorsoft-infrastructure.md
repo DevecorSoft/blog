@@ -11,9 +11,10 @@
 ```mermaid
 flowchart LR
   gateway((gateway))
-  gateway -.-> blog-service((blog-service))
-  gateway -.-> web-service((web-service))
-  gateway -.-> image-service((image-service))
+  gateway -. /blog/list .-> blog-service((blog-service))
+  gateway -. /blog/blog-id .-> blog-service((blog-service))
+  gateway -. / .-> web-service((web-service))
+  gateway -. /image .-> image-service((image-service))
 
   internet((Internet)) -.-> gateway
 ```
@@ -48,6 +49,8 @@ flowchart LR
 
 ### 访问控制视角
 
+公网连接
+
 ```mermaid
 flowchart LR
   subgraph VPC["VPC(172.16.0.0/12)"]
@@ -76,6 +79,8 @@ flowchart LR
   internet -- "no access" --x ins_1
   
 ```
+
+内网连接
 
 ```mermaid
 flowchart LR
@@ -137,3 +142,7 @@ flowchart LR
   entry --> router
   internet((Internet)) --> entry
 ```
+
+## freedesk基本建筑
+
+未完待续...
