@@ -214,6 +214,10 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 
 ![image.png](https://devecor.cn/image/1642247668658/image.png)
 
-actions 地址: [cicirello/jacoco-badge-generator](https://github.com/marketplace/actions/jacoco-badge-generator)
+最简单的用法莫过于在ci中生成svg格式的徽章提交到代码库, 最后在readme文件中使用相对路径引用
 
-基于jacoco的徽章生成器，最简单的用法莫过于在ci中生成svg格式的徽章提交到代码库, 最后在readme文件中使用相对路径引用
+actions 地址: 
+
+* 基于jacoco的徽章生成器: [cicirello/jacoco-badge-generator](https://github.com/marketplace/actions/jacoco-badge-generator)
+* 通用徽章生成器： [badgen](https://github.com/badgen/badgen.net)
+
