@@ -205,6 +205,8 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 
 1. mac一行命令安装一个[docker的代替品](https://github.com/DevecorSoft/DockerDesktopAlternative)：这个项目利用了github actions提供的`macos-latest`测试环境
 
+### 3. 使用github organization共享pipeline资源
+
 
 ## 优雅的第三方Actions
 
