@@ -9,6 +9,7 @@
     - [2.依赖缓存](#2依赖缓存)
     - [3.ci红绿状态徽章](#3ci红绿状态徽章)
     - [4.发布你的应用](#4发布你的应用)
+    - [5. 跨越workflow的数据共享](#5-跨越workflow的数据共享)
   - [pipeline技巧篇](#pipeline技巧篇)
     - [1.安装ssh-keys](#1安装ssh-keys)
     - [2.版本号提升验证](#2版本号提升验证)
@@ -40,7 +41,7 @@ github actions因具有以下优点而深受笔者喜爱
 
 ### 1. 跨job的数据共享
 
-github actions为每一个作业单独分配运行器, 这使得跨越job的数据和配置共享需要额外的步骤
+github actions为每一个作业单独分配运行器, 这使得跨越job(同一个workflow)的数据和配置共享需要额外的步骤
 
 ```mermaid
 flowchart LR
@@ -72,7 +73,7 @@ flowchart LR
 
   job2:
     steps:
-      - name: Get upload url
+      - name: Download text.txt
         uses: actions/download-artifact@v2
         with:
           name: text
@@ -154,6 +155,27 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 ```
 
 ![image.png](https://devecor.cn/image/1642248127587/image.png)
+
+### 5. 跨越workflow的数据共享
+
+当我们希望跨job共享数据的时候使用`github artifacts`,那么跨越workflow的数据共享呢？
+
+答案是`actions/cache@v2`, 你没有看错就是前文依赖缓存用的cache
+
+首先，我认为实践中应尽量避免跨越workflow的共享数据，job中可以完成足够多的事情。
+
+即便你遇到了不得不用的场景，也请克制：
+
+1. 保持数据短命，github有存储限制，达到或者过期会被删除或者覆盖掉
+2. 避免敏感数据，对于同`pull_request`触发的工作流来说，缓存的数据可以轻易拿到
+
+笔者所遇到的一个应用场景是：
+
+存在两个串行的job，第二个依赖于第一个job，并且希望第二个job必须得到人工确认才能执行。
+
+最简单的办法是使用github environment, 不幸的是，github free plan的私仓不支持这一特性，同时不想花钱买github enterprise plan。
+
+于是将这两个job拆成两个workflow，第二个由人工手动触发，并使用`actions/cache@v2`共享数据。
 
 ## pipeline技巧篇
 
