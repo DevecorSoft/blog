@@ -1,10 +1,46 @@
-# Devecorsoft基本建筑
+# Devecor website基本建筑
 
-[Devecorsoft](https://github.com/DevecorSoft)软件产品的基本建筑概述，预计包涵website和freedesk产品
+[Devecor website](https://devecor.cn)网站的基本建筑概述
 
 ## website基本建筑
 
 在弹性计算云服务平台上的基本建筑概述
+
+### 持续集成/部署视角
+
+```mermaid
+flowchart LR
+  subgraph Dev
+    vue(vue dev server)
+    docker(docker-compose)
+  end
+
+  subgraph Staging
+    stag_nginx(nginx gateway)
+    stag_ECS(aliyun ECS)
+  end
+
+  subgraph Live
+    live_nginx(nginx gateway)
+    live_EC2(aws EC2)
+  end
+
+  ghcr(github container registry)
+
+  dockerhub(Dockerhub)
+
+  repository(Repository)
+
+  pipeline(Github actions)
+
+  Dev --git push--> repository --trigger--> pipeline --push image--> ghcr --pull image --> Live
+  pipeline --push image--> dockerhub --pull image--> Live
+
+  dockerhub --pull image--> Staging
+  ghcr --pull image--> Staging
+```
+
+Staging环境和Live环境应该尽量保持完全一致，理想情况下只需要修改dns的指向就可以随意交换Staging和Live环境
 
 ### 微服务架构视角
 
@@ -142,7 +178,3 @@ flowchart LR
   entry --> router
   internet((Internet)) --> entry
 ```
-
-## freedesk基本建筑
-
-未完待续...
