@@ -1,6 +1,6 @@
 # Devecorsoft基本建筑
 
-[Devecorsoft](https://github.com/DevecorSoft)软件产品的基本建筑概述，预计包涵website和freedesk产品
+[Devecorsoft](https://github.com/DevecorSoft)软件产品的基本建筑概述
 
 ## website基本建筑
 
