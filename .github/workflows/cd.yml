@@ -19,13 +19,13 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_ed25519
-          ssh-keyscan -H "devecor.cn" >> ~/.ssh/known_hosts
+          ssh-keyscan -H "dev.devecor.cn" >> ~/.ssh/known_hosts
       
       - name: Publish blog
         run: |
-          ssh root@devecor.cn "mkdir -p ${{ secrets.BLOG_HOME }}"
-          rsync -r $PWD/cn/devecor/blog/ root@devecor.cn:${{ secrets.BLOG_HOME }}blog@next
-          ssh root@devecor.cn "
+          ssh root@dev.devecor.cn "mkdir -p ${{ secrets.BLOG_HOME }}"
+          rsync -r $PWD/cn/devecor/blog/ root@dev.devecor.cn:${{ secrets.BLOG_HOME }}blog@next
+          ssh root@dev.devecor.cn "
             rm ${{ secrets.BLOG_HOME }}blog/*;
             cp ${{ secrets.BLOG_HOME }}blog@next/* ${{ secrets.BLOG_HOME }}blog;
             rm -r ${{ secrets.BLOG_HOME }}blog@next;
