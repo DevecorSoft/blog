@@ -1,6 +1,6 @@
 # Github actions 的100个实用技巧
 
-100实用小技巧，希望能写到100个
+`11/100`个实用小技巧，希望能写到100个
 
 - [Github actions 的100个实用技巧](#github-actions-的100个实用技巧)
   - [动机篇](#动机篇)
@@ -16,6 +16,7 @@
   - [实践技巧篇](#实践技巧篇)
     - [1. 自托管runner的时机](#1-自托管runner的时机)
     - [2. 用以效率化脚本测试](#2-用以效率化脚本测试)
+    - [3. 使用github organization共享pipeline资源](#3-使用github-organization共享pipeline资源)
   - [优雅的第三方Actions](#优雅的第三方actions)
     - [1.覆盖率徽章](#1覆盖率徽章)
 
@@ -226,6 +227,8 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 很多时候笔者会为无脑重复的操作写一个效率化脚本, github actions能提供一个良好的测试环境，特别是Mac os是个比较难得的测试环境。比如下面的例子：
 
 1. mac一行命令安装一个[docker的代替品](https://github.com/DevecorSoft/DockerDesktopAlternative)：这个项目利用了github actions提供的`macos-latest`测试环境
+
+### 3. 使用github organization共享pipeline资源
 
 
 ## 优雅的第三方Actions

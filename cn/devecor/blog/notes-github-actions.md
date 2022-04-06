@@ -1,46 +1,48 @@
-# Github actions 的100个实用技巧
+# Awesome notes of Github actions
 
-100实用小技巧，希望能写到100个
+`11%` of this notes accomplished!
 
-- [Github actions 的100个实用技巧](#github-actions-的100个实用技巧)
-  - [动机篇](#动机篇)
+- [Awesome notes of Github actions](#awesome-notes-of-github-actions)
+  - [Chapter1 Motivation](#chapter1-motivation)
   - [actions技巧篇](#actions技巧篇)
     - [1. 跨job的数据共享](#1-跨job的数据共享)
     - [2.依赖缓存](#2依赖缓存)
     - [3.ci红绿状态徽章](#3ci红绿状态徽章)
     - [4.发布你的应用](#4发布你的应用)
+    - [5. 跨越workflow的数据共享](#5-跨越workflow的数据共享)
   - [pipeline技巧篇](#pipeline技巧篇)
     - [1.安装ssh-keys](#1安装ssh-keys)
     - [2.版本号提升验证](#2版本号提升验证)
   - [实践技巧篇](#实践技巧篇)
     - [1. 自托管runner的时机](#1-自托管runner的时机)
     - [2. 用以效率化脚本测试](#2-用以效率化脚本测试)
+    - [3. 使用github organization共享pipeline资源](#3-使用github-organization共享pipeline资源)
   - [优雅的第三方Actions](#优雅的第三方actions)
     - [1.覆盖率徽章](#1覆盖率徽章)
 
-## 动机篇
+## Chapter1 Motivation
 
-github actions因具有以下优点而深受笔者喜爱
+I'm really like following features of Github Actions:
 
-* 源代码旁直接构建流水线
-* 没有额外的服务器成本，github官方会提供性能可观的运行器
-* actions marketplace 具有生态优势
+* Pipeline that is close to github repository!
+* Github hosted runners is provided!
+* Github Actions marketplace!
 
-支持的运行器和硬件资源
+Supported runners and hardware resources:
 
-| Windows/Linux      | MaxOS              |
-| ------------------ | ------------------ |
-| 2 核 CPU           | 3 核 CPU           |
-| 7 GB RAM 内存      | 14 GB RAM 内存     |
-| 14 GB SSD 硬盘空间 | 14 GB SSD 硬盘空间 |
+| Windows/Linux          | MaxOS                  |
+| ---------------------- | ---------------------- |
+| 2-core CPU             | 3-core CPU             |
+| 7GB of RAM memory      | 14GB of RAM memory     |
+| 14GB of SSD disk space | 14GB of SSD disk space |
 
-当然，这并不代表github acitons没有缺点，相反，其缺点又多又明显，本文不再列举。总之，上面列举的三个优点足以让笔者忽视/忍受各种已知的缺点。
+Certainly, it doesn't mean that there is no disadvantages for this pipeline platform. but who cares? Just enjoy it!
 
 ## actions技巧篇
 
 ### 1. 跨job的数据共享
 
-github actions为每一个作业单独分配运行器, 这使得跨越job的数据和配置共享需要额外的步骤
+github actions为每一个作业单独分配运行器, 这使得跨越job(同一个workflow)的数据和配置共享需要额外的步骤
 
 ```mermaid
 flowchart LR
@@ -72,7 +74,7 @@ flowchart LR
 
   job2:
     steps:
-      - name: Get upload url
+      - name: Download text.txt
         uses: actions/download-artifact@v2
         with:
           name: text
@@ -154,6 +156,27 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 ```
 
 ![image.png](https://devecor.cn/image/1642248127587/image.png)
+
+### 5. 跨越workflow的数据共享
+
+当我们希望跨job共享数据的时候使用`github artifacts`,那么跨越workflow的数据共享呢？
+
+答案是`actions/cache@v2`, 你没有看错就是前文依赖缓存用的cache
+
+首先，我认为实践中应尽量避免跨越workflow的共享数据，job中可以完成足够多的事情。
+
+即便你遇到了不得不用的场景，也请克制：
+
+1. 保持数据短命，github有存储限制，达到或者过期会被删除或者覆盖掉
+2. 避免敏感数据，对于同`pull_request`触发的工作流来说，缓存的数据可以轻易拿到
+
+笔者所遇到的一个应用场景是：
+
+存在两个串行的job，第二个依赖于第一个job，并且希望第二个job必须得到人工确认才能执行。
+
+最简单的办法是使用github environment, 不幸的是，github free plan的私仓不支持这一特性，同时不想花钱买github enterprise plan。
+
+于是将这两个job拆成两个workflow，第二个由人工手动触发，并使用`actions/cache@v2`共享数据。
 
 ## pipeline技巧篇
 
