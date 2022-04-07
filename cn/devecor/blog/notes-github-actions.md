@@ -2,28 +2,28 @@
 
 `11%` of this notes accomplished!
 
-本文收录的所有技巧分为三类：
+There are three kinds of tips:
 
-1. Github actions官方文档中存在，而笔者认为需要highlight出来的技巧，见[actions技巧篇](#actions技巧篇)
-2. Github actions官方文档中不存在，由笔者实践经验总结而来，见[pipeline技巧篇](#pipeline技巧篇)和[实践技巧篇](#实践技巧篇)
-3. 笔者认为非常优雅的第三方Actions名录，见[优雅的第三方Actions](#优雅的第三方actions)
+1. exists in `Github actions` official doc，and I thought it's worth while to be highlighted. see [Chapter2 Actions tips](#chapter2-actions-tips)
+2. doesn't exist in Github actions official doc，but summarized by the author's practical experience，see [Chapter3 Pipeline tips](#chapter3-pipeline-tips) and [Chapter4 Practice tips](#chapter4-practice-tips)
+3. a list of third-party actions that I'm considered elegant，see [Chapter5 Elegant 3d-party actions](#chapter5-elegant-3d-party-actions)
 
 - [Awesome notes of Github actions](#awesome-notes-of-github-actions)
   - [Chapter1 Motivation](#chapter1-motivation)
-  - [actions技巧篇](#actions技巧篇)
-    - [1. 跨job的数据共享](#1-跨job的数据共享)
-    - [2.依赖缓存](#2依赖缓存)
-    - [3.ci红绿状态徽章](#3ci红绿状态徽章)
-    - [4.发布你的应用](#4发布你的应用)
-    - [5. 跨越workflow的数据共享](#5-跨越workflow的数据共享)
-  - [pipeline技巧篇](#pipeline技巧篇)
-    - [1.安装ssh-keys](#1安装ssh-keys)
-    - [2.版本号提升验证](#2版本号提升验证)
-  - [实践技巧篇](#实践技巧篇)
-    - [1. 自托管runner的时机](#1-自托管runner的时机)
+  - [Chapter2 Actions tips](#chapter2-actions-tips)
+    - [1. Share data among jobs](#1-share-data-among-jobs)
+    - [2. Dependencies caches](#2-dependencies-caches)
+    - [3. Workflow badges](#3-workflow-badges)
+    - [4. Publish your application](#4-publish-your-application)
+    - [5. Share data among workflows](#5-share-data-among-workflows)
+  - [Chapter3 Pipeline tips](#chapter3-pipeline-tips)
+    - [1. Install ssh-keys](#1-install-ssh-keys)
+    - [2. Version verification](#2-version-verification)
+  - [Chapter4 Practice tips](#chapter4-practice-tips)
+    - [1. When to self-host runners](#1-when-to-self-host-runners)
     - [2. 用以效率化脚本测试](#2-用以效率化脚本测试)
     - [3. 使用github organization共享pipeline资源](#3-使用github-organization共享pipeline资源)
-  - [优雅的第三方Actions](#优雅的第三方actions)
+  - [Chapter5 Elegant 3d-party actions](#chapter5-elegant-3d-party-actions)
     - [1.覆盖率徽章](#1覆盖率徽章)
 
 ## Chapter1 Motivation
@@ -44,9 +44,9 @@ Supported runners and hardware resources:
 
 Certainly, it doesn't mean that there is no disadvantages for this pipeline platform. but who cares? Just enjoy it!
 
-## actions技巧篇
+## Chapter2 Actions tips
 
-### 1. 跨job的数据共享
+### 1. Share data among jobs
 
 github actions为每一个作业单独分配运行器, 这使得跨越job(同一个workflow)的数据和配置共享需要额外的步骤
 
@@ -89,7 +89,7 @@ flowchart LR
 ```
 
 
-### 2.依赖缓存
+### 2. Dependencies caches
 
 ```mermaid
 flowchart TB
@@ -131,7 +131,8 @@ github actions 提供[依赖缓存](https://docs.github.com/cn/actions/advanced-
 note that：如果你的每次提交都会变更项目配置文件(package.json,pom.xml,build.gradle.kts等), 缓存会失效，原因是默认将这些文件哈希值（`hashFiles`）作为`key`, 此时你需要直接使用`action/cache`并提供自己的`key`
 
 
-### 3.ci红绿状态徽章
+### 3. Workflow badges
+
 看起来是这样：  
 ![image.png](https://devecor.cn/image/1642245128077/image.png)
 
@@ -142,7 +143,7 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 ```
 
 
-### 4.发布你的应用
+### 4. Publish your application
 
 * 在ci中发布到github package
   * github提供[github packages registry](https://docs.github.com/cn/packages/working-with-a-github-packages-registry)
@@ -163,7 +164,7 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 
 ![image.png](https://devecor.cn/image/1642248127587/image.png)
 
-### 5. 跨越workflow的数据共享
+### 5. Share data among workflows
 
 当我们希望跨job共享数据的时候使用`github artifacts`,那么跨越workflow的数据共享呢？
 
@@ -184,9 +185,9 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 
 于是将这两个job拆成两个workflow，第二个由人工手动触发，并使用`actions/cache@v2`共享数据。
 
-## pipeline技巧篇
+## Chapter3 Pipeline tips
 
-### 1.安装ssh-keys
+### 1. Install ssh-keys
 
 自动化部署时常常需要执行scp rsync命令或者在目标主机执行命令，这就需要正确配置运行器的ssh-keys
 
@@ -208,7 +209,7 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
         run: rm ~/.ssh/id_ed25519
 ```
 
-### 2.版本号提升验证
+### 2. Version verification
 
 持续集成部署常常伴随着版本号的快速更迭，各类打包和发布平台都需要一个独一无二的版本号标识当前构建。没有理由抛开版本号不用，对吧？
 
@@ -217,9 +218,9 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 我们可以使用git tag来标记最新版本，在ci里从配置文件里取出版本号与git tag进行对比确定是否正确提升了版本
 
 
-## 实践技巧篇
+## Chapter4 Practice tips
 
-### 1. 自托管runner的时机
+### 1. When to self-host runners
 
 * 私仓，商业团队使用,超出免费的500M/2000分钟额度并希望节省成本之时。
 * 希望保护在ci中使用的secrets之时。
@@ -237,7 +238,7 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 ### 3. 使用github organization共享pipeline资源
 
 
-## 优雅的第三方Actions
+## Chapter5 Elegant 3d-party actions
 
 ### 1.覆盖率徽章
 
