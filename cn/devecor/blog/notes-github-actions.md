@@ -2,6 +2,12 @@
 
 `11%` of this notes accomplished!
 
+本文收录的所有技巧分为三类：
+
+1. Github actions官方文档中存在，而笔者认为需要highlight出来的技巧，见[actions技巧篇](#actions技巧篇)
+2. Github actions官方文档中不存在，由笔者实践经验总结而来，见[pipeline技巧篇](#pipeline技巧篇)和[实践技巧篇](#实践技巧篇)
+3. 笔者认为非常优雅的第三方Actions名录，见[优雅的第三方Actions](#优雅的第三方actions)
+
 - [Awesome notes of Github actions](#awesome-notes-of-github-actions)
   - [Chapter1 Motivation](#chapter1-motivation)
   - [actions技巧篇](#actions技巧篇)
