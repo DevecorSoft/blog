@@ -8,7 +8,9 @@
 2. Github actions官方文档中不存在，由笔者实践经验总结而来，见[pipeline技巧篇](#pipeline技巧篇)和[实践技巧篇](#实践技巧篇)
 3. 笔者认为非常优雅的第三方Actions名录，见[优雅的第三方Actions](#优雅的第三方actions)
 
+## 目录
 - [Github actions 的100个实用技巧](#github-actions-的100个实用技巧)
+  - [目录](#目录)
   - [动机篇](#动机篇)
   - [actions技巧篇](#actions技巧篇)
     - [1. 跨job的数据共享](#1-跨job的数据共享)

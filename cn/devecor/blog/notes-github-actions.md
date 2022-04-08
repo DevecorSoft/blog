@@ -8,7 +8,9 @@ There are three kinds of tips:
 2. doesn't exist in Github actions official doc，but summarized by the author's practical experience，see [Chapter3 Pipeline tips](#chapter3-pipeline-tips) and [Chapter4 Practice tips](#chapter4-practice-tips)
 3. a list of third-party actions that I'm considered elegant，see [Chapter5 Elegant 3d-party actions](#chapter5-elegant-3d-party-actions)
 
+## Contents
 - [Awesome notes of Github actions](#awesome-notes-of-github-actions)
+  - [Contents](#contents)
   - [Chapter1 Motivation](#chapter1-motivation)
   - [Chapter2 Actions tips](#chapter2-actions-tips)
     - [1. Share data among jobs](#1-share-data-among-jobs)
