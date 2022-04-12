@@ -50,7 +50,7 @@ Certainly, it doesn't mean that there is no disadvantages for this pipeline plat
 
 ### 1. Share data among jobs
 
-github actions为每一个作业单独分配运行器, 这使得跨越job(同一个workflow)的数据和配置共享需要额外的步骤
+github actions forces that each job runs in a dedicated runner. Artifacts allow you to share data between jobs in a workflow and store data once that workflow has completed.
 
 ```mermaid
 flowchart LR
@@ -65,11 +65,9 @@ flowchart LR
    upload -.post.-> api -.get.-> download
 ```
 
-最简单的方式莫过于利用github提供的artifacts. 即在上游job中将数据或者配置打印成文本文件(你当然能够选择任何压缩格式)，利用[actions/upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)上传至artifact。下游job中利用[actions/download-artifact](https://github.com/marketplace/actions/download-a-build-artifact)下载
+Here is the simplest example:
 
-也许笔者应该在此处提供一个例子:
-
-> :memo: **Note:** 简单起见，还是让例子简单一点
+> :memo: **Note:** For simplicity's sake, let's keep the examples simple
 
 ```yaml
   job1:
@@ -93,6 +91,8 @@ flowchart LR
 
 ### 2. Dependencies caches
 
+Jobs on GitHub-hosted runners start in a clean virtual environment and must download dependencies each time, causing increased network utilization, longer runtime, and increased cost. To help speed up the time it takes to recreate these files, GitHub can cache dependencies you frequently use in workflows.
+
 ```mermaid
 flowchart TB
   subgraph workflow1
@@ -106,7 +106,7 @@ flowchart TB
   subgraph cache
   end
 
-  workflow1 -.key不存在,将path写入缓存.-> cache -.key存在,将缓存写入path.-> workflow2
+  workflow1 -.if key doesn't exists, write files to cache.-> cache -.if key exists,read files from cache.-> workflow2
   workflow1 --> workflow2
 ```
 
@@ -119,9 +119,7 @@ flowchart TB
             ${{ runner.os }}-node-
 ```
 
-github actions 提供[依赖缓存](https://docs.github.com/cn/actions/advanced-guides/caching-dependencies-to-speed-up-workflows)功能加速你的ci/cd，适用于`Maven, Gradle, npm, and Yarn`等
-
-下列语言/平台的安装actions提供了`cache`参数，可供快速配置依赖缓存
+If you are caching the package managers listed below, consider using the respective setup-* actions, which require almost zero configuration and are easy to use.
 
 | Package managers | setup-* action for caching |
 | ---------------- | -------------------------- |
@@ -130,15 +128,13 @@ github actions 提供[依赖缓存](https://docs.github.com/cn/actions/advanced-
 | gradle, maven    | setup-java                 |
 | ruby gems        | setup-ruby                 |
 
-note that：如果你的每次提交都会变更项目配置文件(package.json,pom.xml,build.gradle.kts等), 缓存会失效，原因是默认将这些文件哈希值（`hashFiles`）作为`key`, 此时你需要直接使用`action/cache`并提供自己的`key`
-
 
 ### 3. Workflow badges
 
-看起来是这样：  
+Looks like：  
 ![image.png](https://devecor.cn/image/1642245128077/image.png)
 
-只要workflow存在，github就会为你生成状态徽章，可利用以下规则在readme中引用（在项目的actions里点击`Create status badge`复制链接最简单)
+Github actions will generate this badge by default. You can link it to your README file.
 
 ```markdown
 [![<your workflow name>](https://github.com/<user>/<repo>/actions/workflows/<workflow>.yml/badge.svg)](https://github.com/<user>/<repo>/actions/workflows/<workflow>.yml)
