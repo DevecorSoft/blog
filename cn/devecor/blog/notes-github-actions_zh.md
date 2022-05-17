@@ -50,7 +50,9 @@ github actions因具有以下优点而深受笔者喜爱
 
 ### 1. 跨job的数据共享
 
-github actions为每一个作业单独分配运行器, 这使得跨越job(同一个workflow)的数据和配置共享需要额外的步骤
+github actions为每一个作业单独分配运行器, 这使得跨越job(同一个workflow)的数据和配置共享需要额外的步骤。我们有两种方式可以选择：
+
+- upload/download artifact - 共享文件
 
 ```mermaid
 flowchart LR
@@ -81,6 +83,7 @@ flowchart LR
           path: text.txt
 
   job2:
+    needs: job1
     steps:
       - name: Download text.txt
         uses: actions/download-artifact@v2
@@ -90,6 +93,23 @@ flowchart LR
       - run: cat text.txt
 ```
 
+- job's outputs - 共享简单数据
+
+若两个作业存在依赖关系, 前置作业拥有`outputs`，则可在下游作业中使用`needs.{leading job}.outputs.{leading job's outputs}`获得前置作业的输出，例如
+
+```yaml
+jobs:
+  job1:
+    outputs:
+      out: ${{ steps.my_step.my_output }}
+    steps:
+      - id: my_step
+        run: echo "::set-output name=my_output::hello"
+  job2:
+    needs: job1
+    steps:
+      - run: echo "${{ needs.job1.outputs.out }}"
+```
 
 ### 2.依赖缓存
 

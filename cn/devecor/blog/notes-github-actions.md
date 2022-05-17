@@ -50,7 +50,11 @@ Certainly, it doesn't mean that there is no disadvantages for this pipeline plat
 
 ### 1. Share data among jobs
 
-github actions forces that each job runs in a dedicated runner. Artifacts allow you to share data between jobs in a workflow and store data once that workflow has completed.
+Github actions forces that each job runs in a dedicated runner. There are two approaches we have:
+
+(1) Artifacts - upload/download files
+
+Artifacts allow you to share data between jobs in a workflow and store data once that workflow has completed.
 
 ```mermaid
 flowchart LR
@@ -79,6 +83,7 @@ Here is the simplest example:
           path: text.txt
 
   job2:
+    needs: job1
     steps:
       - name: Download text.txt
         uses: actions/download-artifact@v2
@@ -86,6 +91,24 @@ Here is the simplest example:
           name: text
 
       - run: cat text.txt
+```
+
+(2) job's outputs - read leading job's outputs
+
+if case we have a dependent job and leading job have it's outputs, we can read the outputs by `needs.{leading job}.outputs.{leading job's outputs}` for example:
+
+```yaml
+jobs:
+  job1:
+    outputs:
+      out: ${{ steps.my_step.my_output }}
+    steps:
+      - id: my_step
+        run: echo "::set-output name=my_output::hello"
+  job2:
+    needs: job1
+    steps:
+      - run: echo "${{ needs.job1.outputs.out }}"
 ```
 
 
