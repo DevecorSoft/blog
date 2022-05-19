@@ -1,10 +1,5 @@
-# easy ci and simple cd
+# Github Action VS Jenkins
 
-try to use github actions to do simple ci/cd, try to use jenkins as well, aim to have a beautiful monitor.
-
-## why ci/cd
-
-Continuous delivery can help large organizations become as lean, agile and innovative as startups. Through reliable, low-risk releases, Continuous Delivery makes it possible to continuously adapt software in line with user feedback, shifts in the market and changes to business strategy. Test, support, development and operations work together as one delivery team to automate and streamline the build-test-release process.
 
 ## ci/cd tools
 
@@ -13,7 +8,6 @@ Continuous delivery can help large organizations become as lean, agile and innov
 #### advantage
 * 源代码旁直接构建流水线
 * 没有额外的服务器成本，github官方会提供性能可观的运行器
-* actions marketplace 具有生态优势
 
 支持的运行器和硬件资源
 
@@ -26,7 +20,6 @@ Continuous delivery can help large organizations become as lean, agile and innov
 #### disadvantage
 * 使用第三方的actions的安全性令人担忧
 * 可视化效果较差
-* 不能重新触发一个工作流的单独job，只能重新运行整个工作流，这使得长耗时的ci/cd变得不可接受
 * 工作流复用成本比较高，要么依赖于脚本复用，要么自己发布GitHub actions达到复用的目的
 
 ### jenkins
