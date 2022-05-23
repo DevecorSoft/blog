@@ -16,7 +16,7 @@ There are three kinds of tips:
     - [1. Share data among jobs](#1-share-data-among-jobs)
     - [2. Dependencies caches](#2-dependencies-caches)
     - [3. Workflow badges](#3-workflow-badges)
-    - [4. Publish your application](#4-publish-your-application)
+    - [4. Publish your artifacts](#4-publish-your-artifacts)
     - [5. Share data among workflows](#5-share-data-among-workflows)
   - [Chapter3 Pipeline tips](#chapter3-pipeline-tips)
     - [1. Install ssh-keys](#1-install-ssh-keys)
@@ -164,12 +164,11 @@ Github actions will generate this badge by default. You can link it to your READ
 ```
 
 
-### 4. Publish your application
+### 4. Publish your artifacts
 
-* 在ci中发布到github package
-  * github提供[github packages registry](https://docs.github.com/cn/packages/working-with-a-github-packages-registry)
-* 在ci中发布github release
-  * 可使用`actions/upload-release-asset`上传到github release
+* You probably need to publish/consume your artifacts or share your application/service with people. github packages registry is a good choice in workflows.
+  * For more infomation, see [github packages registry](https://docs.github.com/cn/packages/working-with-a-github-packages-registry)
+* Also we can upload a executable file/zip/binary/anything into github release via github actions workflow.
 
 ```yaml
       - name: Upload Release Asset
