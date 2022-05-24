@@ -13,7 +13,7 @@ That's the reason we need to follow [document quadrants](https://documentation.d
   - [Contents](#contents)
   - [Tutorials](#tutorials)
     - [sphinx](#sphinx)
-    - [markdown + github](#markdown--github)
+    - [Markdown in github](#markdown-in-github)
 
 ## Tutorials
 
@@ -28,7 +28,7 @@ how-to guides
 reference
 explanation
     
-### markdown + github
+### Markdown in github
 
 folders
   * tutorials
