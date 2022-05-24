@@ -21,7 +21,7 @@ That's the reason we need to follow [document quadrants](https://documentation.d
 
 [sphinx](https://www.sphinx-doc.org/en/master/) is the best document tool as far as I know. It was originally created for the Python documentation, and it has excellent facilities for the documentation of software projects in a range of languages.
 
-we gonna talk about the best practice of document quardrants in sphinx tool. 
+we gonna talk about the practice of document quardrants in sphinx tool.
 
 tutorials
 how-to guides
