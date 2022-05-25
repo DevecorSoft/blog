@@ -168,7 +168,7 @@ Github actions will generate this badge by default. You can link it to your READ
 
 * You probably need to publish/consume your artifacts or share your application/service with people. github packages registry is a good choice in workflows.
   * For more infomation, see [github packages registry](https://docs.github.com/cn/packages/working-with-a-github-packages-registry)
-* Also we can upload a executable file/zip/binary/anything into github release via github actions workflow.
+* Also we can upload a executable file/zip/binary into github release via github actions workflow.
 
 ```yaml
       - name: Upload Release Asset
