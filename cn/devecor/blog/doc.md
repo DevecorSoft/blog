@@ -10,7 +10,7 @@ That's the reason we need to follow [document quadrants](https://documentation.d
 
 
 > Documentation needs to include and be structured around its four different functions: **tutorials, how-to guides, technical reference and explanation**. Each of them requires a distinct mode of writing.
-
+>
 |             | Tutorials                          | How-to guides                        | Reference                         | Explanation                           |
 | ----------- | ---------------------------------- | ------------------------------------ | --------------------------------- | ------------------------------------- |
 | oriented to | learning                           | a goal                               | infomation                        | understanding                         |

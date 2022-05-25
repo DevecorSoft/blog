@@ -10,6 +10,7 @@
 这就是我们要用文档象限的理念来组织我们的产品文档, 此处或许有必要明确一下文档四象限的内涵:
 
 > 文档必须包涵并围绕四个不同的功能点进行结构化，他们就是： **tutorials, how-to guides, technical reference and explanation**
+>
 |        | Tutorials            | How-to guides              | Reference          | Explanation              |
 | ------ | -------------------- | -------------------------- | ------------------ | ------------------------ |
 | 面向   | 学习                 | 特定目标                   | 信息               | 理解                     |
@@ -107,7 +108,7 @@ sphinx-build -b html docs/source/ docs/build/html
 
 效果如下：
 
-<img src="https://devecor.cn/image/21696a5e-1359-49d3-aef1-e36f706ee8ee/image.png" width="600px"/>
+<img src="https://devecor.cn/image/21696a5e-1359-49d3-aef1-e36f706ee8ee/image.png" style="max-width:100%;"/>
 
 
 #### 使用sphinx组织文档象限
