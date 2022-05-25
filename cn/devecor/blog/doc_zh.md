@@ -69,19 +69,19 @@ sphinx-quickstart docs
 
 * [myst-parser](https://myst-parser.readthedocs.io/en/latest/index.html) - 一个sphinx扩展工具，能让你在sphinx下使用markdown编写你的文档(sphinx默认的文档标记语法是RestructuredText)
 * [sphinxcontrib-mermaid](https://myst-parser.readthedocs.io/en/latest/intro.html#extending-sphinx) - 支持`mermaid`绘图，配合myst-parser可以直接基于markdown进行绘图。例如：
-    ````
-    ```{mermaid}
-    flowchart LR
-      A --> B
-    ```
-    ````
+  ````
+  ```{mermaid}
+  flowchart LR
+    A --> B
+  ```
+  ````
 
-    渲染效果：
+  渲染效果：
 
-    ```mermaid
-    flowchart LR
-      A --> B
-    ```
+  ```mermaid
+  flowchart LR
+    A --> B
+  ```
 
 * [sphinx-book-theme](https://sphinx-book-theme.readthedocs.io/en/latest/index.html) - 一款简明的sphinx主题
 
