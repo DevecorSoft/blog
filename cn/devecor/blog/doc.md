@@ -1,6 +1,6 @@
-# Documentation quadrants
+# Practice reference for documentation quadrants
 
-A handy way to ensure the right documentation is being produced.
+Practicing a handy way to ensure the right documentation is being produced.
 
 ## Introduction
 
@@ -22,20 +22,42 @@ Documentation quardrants looks straightforward, right?
 
 ## Contents
 
-- [Documentation quadrants](#documentation-quadrants)
+- [Practice reference for documentation quadrants](#practice-reference-for-documentation-quadrants)
   - [Introduction](#introduction)
   - [Contents](#contents)
   - [Tutorials](#tutorials)
     - [sphinx](#sphinx)
+      - [Get started with sphinx](#get-started-with-sphinx)
     - [Markdown in github](#markdown-in-github)
 
 ## Tutorials
 
 ### sphinx
 
-[sphinx](https://www.sphinx-doc.org/en/master/) is the best document tool as far as I know. It was originally created for the Python documentation, and it has excellent facilities for the documentation of software projects in a range of languages.
+> :memo: **Note:** this is not a discussion of the Sphinx in ancient Egypt:blush:.
 
-we gonna talk about the practice of document quardrants in sphinx tool.
+[sphinx](https://www.sphinx-doc.org/en/master/) is the best document generation tool as far as I know. It was originally created for the Python documentation, and it has excellent facilities for the documentation of software projects in a range of languages.
+
+we gonna talk about the practice for document quadrants with sphinx tool.
+
+#### Get started with sphinx
+
+`sphinx` is been distributed to public as a 3rdparty library for `Python`. So you have to install a Python interpreter. Don't worry, we prepared two solutions to keep it simple no matter if you are familiar with Python.
+
+If you are aready a `Python` user, I highly recommend using [miniconda](https://docs.conda.io/en/latest/miniconda.html) to manage your python envirnments. You can have multiple python interpreters that are isolated from each other.
+
+You can test your miniconda installation with `conda -V`, and it's output like `conda 4.12.0`.
+
+It's time to setup dedicated python interpreter for sphinx tool:
+
+```sh
+conda create --name docs  python=3.10
+conda activate docs
+```
+
+> :memo: **Note:** By default, miniconda will fallback to `base` interpreter is case you reopen terminal. we have to activate `docs` once again: `conda activate docs`.
+
+Even if you havn't ever used `Python`, you probably an't gonna need to install a Python interpreter! By default, it's preinstalled for Mac users and most of Linux users. You can check it by `python3 -V`. But for windows users, you have to download it from [official website](https://www.python.org/downloads/).
 
 tutorials
 how-to guides

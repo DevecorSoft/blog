@@ -1,6 +1,6 @@
-# 文档象限
+# 文档象限实践参考
 
-一种行之有效的文档组织方式
+实践一种行之有效的文档组织方式
 
 ## 序
 
@@ -123,12 +123,27 @@ sphinx-build -b html docs/source/ docs/build/html
 * explanation
   * architecture decisions
 
-笔者发现利用sphinx的`toctree`指令，可以轻易实现上述效果。
+因此假定我们编写的文档目录结构是：
+
+```
+├── explanation
+│   ├── api-design.md
+│   ├── apitest.md
+│   ├── architecture.md
+│   ├── infrastructure.md
+│   └── spike-aws-lambda.md
+├── how-to-guides
+│   └── development-guide.md
+└── reference
+    └── index.md
+```
+
+笔者发现利用sphinx的`toctree`指令，可以轻易实现文档象限需要的效果。
 在`source`文件夹下创建四个目录，分别命名为tutorials，how-to guides， reference 和 explanation来放置你的文档
 在`index.rst`文件里声明四个`toctree`, 这将被渲染成树形结构的文档标题列表，下面是一个例子
 
 ```
-Welcome to tinyoauth's documentation!
+Welcome to example's documentation!
 =====================================
 
 .. toctree::
@@ -158,22 +173,6 @@ Welcome to tinyoauth's documentation!
 
 > :memo: **Note:** `index.rst`采用的是`reStructuredText`标记语法，实践中可按需更换成`markdown`
 
-对应的目录结构是：
-```
-├── conf.py
-├── explanation
-│   ├── api-design.md
-│   ├── apitest.md
-│   ├── architecture.md
-│   ├── infrastructure.md
-│   └── spike-aws-lambda.md
-├── how-to-guides
-│   └── development-guide.md
-├── index.rst
-└── reference
-    └── index.md
-```
-
 渲染效果，可参考[这里](https://devecorsoft.github.io/tinyoauth/)
 
 ### markdown + github
@@ -182,8 +181,11 @@ Welcome to tinyoauth's documentation!
 
 利用github本身作为文档系统已经成为一个不错的选择。所需无非四个文件夹而已：
 
-folders
-  * tutorials
-  * how-to guides
-  * reference
-  * explanation
+* tutorials
+* how-to guides
+* reference
+* explanation
+
+当然，你可能需要一个`README.md`作为入口文件，其中写上`Content index`， 像[这样](https://github.com/DevecorSoft/upimage/tree/main/docs)：
+
+![image](https://devecor.cn/image/ab5f8806-c615-4159-a418-26f717d320ae/image.png)
