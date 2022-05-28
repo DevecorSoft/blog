@@ -28,6 +28,7 @@ Documentation quardrants looks straightforward, right?
   - [Tutorials](#tutorials)
     - [sphinx](#sphinx)
       - [Get started with sphinx](#get-started-with-sphinx)
+      - [Organize your documentation with sphinx](#organize-your-documentation-with-sphinx)
     - [Markdown in github](#markdown-in-github)
 
 ## Tutorials
@@ -122,11 +123,81 @@ sphinx-build -b html docs/source/ docs/build/html
 it look pretty good.
 
 <img src="https://devecor.cn/image/21696a5e-1359-49d3-aef1-e36f706ee8ee/image.png" style="max-width:100%;"/>
+
+#### Organize your documentation with sphinx
+
+As the principle of document quadrants, we'd better to structure our documentation with four functionalities. e.g.
+
+* tutorials
+  * create your project
+  * deploy your app to cloud  
+* how-to guides
+  * get started with xxx
+* reference
+  * module index
+* explanation
+  * architecture decisions
+
+Assume that we have documentations with this structure:
+
+```
+├── explanation
+│   ├── api-design.md
+│   ├── apitest.md
+│   ├── architecture.md
+│   ├── infrastructure.md
+│   └── spike-aws-lambda.md
+├── how-to-guides
+│   └── development-guide.md
+└── reference
+    └── index.md
+```
+
+I noticed that `toctree` directive in sphinx is adequate for our needs. Just declare four `toctree`s in `index.rst` which is entry point of sphinx.
+
+```
+Welcome to example's documentation!
+=====================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Explanation:
+
+   explanation/architecture
+   explanation/spike-aws-lambda
+   explanation/apitest
+   explanation/api-design
+   explanation/infrastructure
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: How-to Guides:
+
+   how-to-guides/development-guide
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Reference:
+
+   reference/index
+```
+
+> :memo: **Note:** As it's memtioned above, `index.rst` is a `reST` file, we can replace it by `markdown` on demand. However, it's simple enough, No reason to change it in my opinion.
+
+Here is a real-life [example](https://devecorsoft.github.io/tinyoauth/) to preview.
     
 ### Markdown in github
+
+As the most popular code hosting platform for developers, `Github`'s support for markdown is not bad. Particularly, `Github` has added support for `mermaid` drawing and common image display in the past years, making `markdown` on github much more presentable. It can be a good "documentation tool" requiring only four folders.
 
 folders
   * tutorials
   * how-to guides
   * reference
   * explanation
+
+You probably want a `README.md` listing your "Content index" as the entry point. e.g.
+
+[![image](https://devecor.cn/image/ab5f8806-c615-4159-a418-26f717d320ae/image.png)](https://github.com/DevecorSoft/upimage/tree/main/docs)

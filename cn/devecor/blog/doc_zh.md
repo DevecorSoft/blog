@@ -186,7 +186,7 @@ Welcome to example's documentation!
 
 ### markdown + github
 
-`Github`作为全球最大的代码托管平台，对markdown的支持不可谓不好，近来，`Github`加入对`mermaid`绘图和常用图片显示的支持, 使得`markdown`在github上表现能力大幅提升。
+`Github`作为全球最大的代码托管平台，对markdown的支持不可谓不好，近来，`Github`在过去一年里加入对`mermaid`绘图和常用图片显示的支持, 使得`markdown`在github上表现能力大幅提升。
 
 利用github本身作为文档系统已经成为一个不错的选择。所需无非四个文件夹而已：
 
