@@ -66,7 +66,8 @@ sphinx-book-theme >= 0.3.2
 > :memo: **Note:** 你可能需要键入`python3`而不是`python`
 
 是时候初始化我们的文档了:
-```
+
+```sh
 sphinx-quickstart docs
 ```
 这会生成一个docs目录，[sphinx官方](https://www.sphinx-doc.org/en/master/tutorial/getting-started.html)已经给出了足够优秀的说明，本文不再赘述。

@@ -70,7 +70,58 @@ sphinx-book-theme >= 0.3.2
 
 > :memo: **Note:** You probably need to type `python3` instead of `python` sometimes.
 
+Now, everything is all right, we are able to initialize our documentation:
 
+```sh
+sphinx-quickstart docs
+```
+
+This will generate several files in `docs` folder. and [sphinx official doc](https://www.sphinx-doc.org/en/master/tutorial/getting-started.html) give your some explanations about them. Please take time to read it.
+
+You're probably confused with so many dependencies in `requirements.txt`. Each of them is optional but quite useful:
+
+* [myst-parser](https://myst-parser.readthedocs.io/en/latest/index.html) - By default, sphinx's plaintext markup language is `reStructuredText (reST) ` instead of `markdown`. And this extension has the capability of replacing `reST` with `markdown`
+* [sphinxcontrib-mermaid](https://myst-parser.readthedocs.io/en/latest/intro.html#extending-sphinx) - [Mermaid.js](https://mermaid-js.github.io/mermaid/#/) supporting! It's pretty cool to draw a diagram with plaintext in markdown, e.g. you type the follow code block:
+  ````
+  ```{mermaid}
+  flowchart LR
+    A --> B
+  ```
+  ````
+
+  And this will become:
+
+  ```mermaid
+  flowchart LR
+    A --> B
+  ```
+
+* [sphinx-book-theme](https://sphinx-book-theme.readthedocs.io/en/latest/index.html) - a theme that looks brief and clear.
+
+These three components (two extensions and one theme) need to be configured into `conf.py`.
+
+```python
+# ... other configurations...
+
+extensions = [
+    'sphinxcontrib.mermaid',
+    'myst_parser'
+]
+
+# ... other configurations...
+
+html_theme = 'sphinx_book_theme'
+```
+
+Then you can generate your docs into `html`:
+
+```
+sphinx-build -b html docs/source/ docs/build/html
+```
+
+it look pretty good.
+
+<img src="https://devecor.cn/image/21696a5e-1359-49d3-aef1-e36f706ee8ee/image.png" style="max-width:100%;"/>
     
 ### Markdown in github
 
