@@ -6,7 +6,7 @@ Practicing a handy way to ensure the right documentation is being produced.
 
 > It doesn’t matter how good your product is, because if its documentation is not good enough, people will not use it. Even if they have to use it because they have no choice, without good documentation, they won’t use it effectively or the way you’d like them to.
 
-That's the reason we need to follow [document quadrants](https://documentation.divio.com/introduction/) pattern.
+That's the reason why we need to follow [document quadrants](https://documentation.divio.com/introduction/) pattern.
 
 
 > Documentation needs to include and be structured around its four different functions: **tutorials, how-to guides, technical reference and explanation**. Each of them requires a distinct mode of writing.
@@ -56,7 +56,7 @@ conda create --name docs  python=3.10
 conda activate docs
 ```
 
-> :memo: **Note:** By default, miniconda will fallback to `base` interpreter is case you reopen terminal. we have to activate `docs` once again: `conda activate docs`.
+> :memo: **Note:** By default, miniconda will fallback to `base` interpreter if case you reopen terminal. we have to activate `docs` once again with `conda activate docs`.
 
 Even if you havn't ever used `Python`, you probably an't gonna need to install a Python interpreter! By default, it's preinstalled for Mac users and most of Linux users. You can check it by `python3 -V`. But for windows users, you have to download it from [official website](https://www.python.org/downloads/).
 
@@ -120,7 +120,7 @@ Then you can generate your docs into `html`:
 sphinx-build -b html docs/source/ docs/build/html
 ```
 
-it look pretty good.
+it looks pretty good.
 
 <img src="https://devecor.cn/image/21696a5e-1359-49d3-aef1-e36f706ee8ee/image.png" style="max-width:100%;"/>
 
