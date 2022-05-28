@@ -59,10 +59,18 @@ conda activate docs
 
 Even if you havn't ever used `Python`, you probably an't gonna need to install a Python interpreter! By default, it's preinstalled for Mac users and most of Linux users. You can check it by `python3 -V`. But for windows users, you have to download it from [official website](https://www.python.org/downloads/).
 
-tutorials
-how-to guides
-reference
-explanation
+Once you have python interpreter, it become so easy to install sphinx and its extensions. Try to save them in `requirements.txt` file as follows, then you can install them with `python -m pip install -r requirements.txt`.
+
+```
+sphinx >= 4.5.0
+sphinxcontrib-mermaid >= 0.7.1
+myst-parser >= 0.17.2
+sphinx-book-theme >= 0.3.2
+```
+
+> :memo: **Note:** You probably need to type `python3` instead of `python` sometimes.
+
+
     
 ### Markdown in github
 
