@@ -210,7 +210,12 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
 
 ### 1.安装ssh-keys
 
-自动化部署时常常需要执行scp rsync命令或者在目标主机执行命令，这就需要正确配置运行器的ssh-keys
+自动化部署时常常需要执行scp rsync命令或者在目标主机执行命令，这就需要正确配置运行器的ssh-keys。建议不要使用第三方的Github actions来安装key-pair凭证。
+
+> 让作为第三方的 GitHub Actions 访问你的构建流水线可能会以不安全的方式共享机密信息
+> ---[thoughtworks 技术雷达](https://www.thoughtworks.com/radar/platforms/github-actions)
+
+笔者推荐下列方式来配置你的ssh凭证：
 
 ```yaml
       - name: Install ssh-key
@@ -221,14 +226,17 @@ note that：如果你的每次提交都会变更项目配置文件(package.json,
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.TARGET_SERVER }}" >> ~/.ssh/known_hosts
-```
+      
+      - name: Your step for deploy
+        continue-on-error: true
+        run: |
+          ssh xxx
 
-部署结束时一定不要忘了移除运行器的ssh-key凭证
-
-```yaml
       - name: Delete ssh-key
         run: rm ~/.ssh/id_ed25519
 ```
+
+> :memo: **Note:** 值得注意的是，我们最好在部署步骤结束后移除你的key-pair凭证。但是如果你的部署步骤失败了，移除key-pair的步骤就得不到执行，不要忘记给你用来部署的步骤加上`continue-on-error: true`声明。
 
 ### 2.版本号提升验证
 

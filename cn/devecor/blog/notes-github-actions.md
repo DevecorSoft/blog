@@ -186,30 +186,36 @@ Github actions will generate this badge by default. You can link it to your READ
 
 ### 5. Share data among workflows
 
-当我们希望跨job共享数据的时候使用`github artifacts`,那么跨越workflow的数据共享呢？
+We share data among `jobs` via `github artifacts` or job's outputs. what about data sharing among workflows?
 
-答案是`actions/cache@v2`, 你没有看错就是前文依赖缓存用的cache
+Really interesting, `actions/cache@v2` is adequate for our needs.
 
-首先，我认为实践中应尽量避免跨越workflow的共享数据，job中可以完成足够多的事情。
+> :memo: **Note:** job is so powerful can finish most of work. even if you have to share data among workflows, please keep data limited:
 
-即便你遇到了不得不用的场景，也请克制：
+1. keep data short-life
+2. avoid secrets
 
-1. 保持数据短命，github有存储限制，达到或者过期会被删除或者覆盖掉
-2. 避免敏感数据，对于同`pull_request`触发的工作流来说，缓存的数据可以轻易拿到
+A tricky scenario that I have encountered is:
 
-笔者所遇到的一个应用场景是：
+> There are two serial jobs, the second one depends on the first one, and it is expected that the second one must be manually confirmed before it can be executed.
 
-存在两个串行的job，第二个依赖于第一个job，并且希望第二个job必须得到人工确认才能执行。
+The easiest way to achieve it is [github environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment). Unfortunately, github free plan didn't allow to try it in a private repository.
 
-最简单的办法是使用github environment, 不幸的是，github free plan的私仓不支持这一特性，同时不想花钱买github enterprise plan。
-
-于是将这两个job拆成两个workflow，第二个由人工手动触发，并使用`actions/cache@v2`共享数据。
+So I make the two jobs become two separate workfolw. Leave the second one triggered by workflow call and fetch data from cache.
 
 ## Chapter3 Pipeline tips
 
 ### 1. Install ssh-keys
 
-自动化部署时常常需要执行scp rsync命令或者在目标主机执行命令，这就需要正确配置运行器的ssh-keys
+We often run some remote command via ssh in the practice for CI/CD pipeline. That means we have to configure key-pairs in github actions runner.
+
+> :memo: **Warning:** do not use 3rdparty Github Actions to install key pair.
+
+> giving third-party GitHub Actions
+access to your build pipeline risks sharing secrets in insecure ways
+> ---[thoughtworks technology radar](https://www.thoughtworks.com/radar/platforms/github-actions)
+
+I suggest to do it by ourselves:
 
 ```yaml
       - name: Install ssh-key
@@ -220,14 +226,17 @@ Github actions will generate this badge by default. You can link it to your READ
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.TARGET_SERVER }}" >> ~/.ssh/known_hosts
-```
+      
+      - name: Your step for deploy
+        continue-on-error: true
+        run: |
+          ssh xxx
 
-部署结束时一定不要忘了移除运行器的ssh-key凭证
-
-```yaml
       - name: Delete ssh-key
         run: rm ~/.ssh/id_ed25519
 ```
+
+> :memo: **Note:** 
 
 ### 2. Version verification
 

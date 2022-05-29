@@ -22,6 +22,7 @@ jobs:
           ssh-keyscan -H "dev.devecor.cn" >> ~/.ssh/known_hosts
       
       - name: Publish blog
+        continue-on-error: true
         run: |
           ssh root@dev.devecor.cn "mkdir -p ${{ secrets.BLOG_HOME }}"
           rsync -r $PWD/cn/devecor/blog/ root@dev.devecor.cn:${{ secrets.BLOG_HOME }}blog@next
