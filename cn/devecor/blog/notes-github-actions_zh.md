@@ -45,7 +45,15 @@ github actions因具有以下优点而深受笔者喜爱
 | 7 GB RAM 内存      | 14 GB RAM 内存     |
 | 14 GB SSD 硬盘空间 | 14 GB SSD 硬盘空间 |
 
-当然，这并不代表github acitons没有缺点，相反，其缺点又多又明显，本文不再列举。总之，上面列举的三个优点足以让笔者忽视/忍受各种已知的缺点。
+我们喜欢这些特性，并不意味着我们要不加权衡的使用它。事实上，你可能需要知道：
+
+> GitHub Actions 的使用量在去年大幅增长。之前的使用经历已经证明它可以处理更复杂的工作流程，并在
+复合操作中调用其他操作。但是，它仍存在一些缺点，例如无法重新触发工作流的单个作业。尽管 GitHub
+Marketplace 中的生态系统有其明显的优势，但让作为第三方的 GitHub Actions 访问你的构建流水线可能会
+以不安全的方式共享机密信息
+> ---[Thoughtworks 技术雷达](https://www.thoughtworks.com/radar/platforms/github-actions)
+
+当你选择阅读本文，我知道你必定接触过`Github Actions`，相信本文中的玩法能让觉得英雄所见略同。
 
 ## actions技巧篇
 

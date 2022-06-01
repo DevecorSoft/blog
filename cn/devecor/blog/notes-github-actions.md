@@ -4,9 +4,9 @@
 
 There are three kinds of tips:
 
-1. exists in `Github actions` official doc，and I thought it's worth while to be highlighted. see [Chapter2 Actions tips](#chapter2-actions-tips)
-2. doesn't exist in Github actions official doc，but summarized by the author's practical experience，see [Chapter3 Pipeline tips](#chapter3-pipeline-tips) and [Chapter4 Practice tips](#chapter4-practice-tips)
-3. a list of third-party actions that I'm considered elegant，see [Chapter5 Elegant 3d-party actions](#chapter5-elegant-3d-party-actions)
+1. Items are worthwhile to highlight from the Github Actions official doc. See the details of [Chapter2 Actions tips](#chapter2-actions-tips)
+2. Items are summarized by practical experience of myself which are not in the official doc. See the detals of [Chapter3 Pipeline tips](#chapter3-pipeline-tips) and [Chapter4 Practice tips](#chapter4-practice-tips)
+3. The elegant items from the third party actions from my point of view. See [Chapter5 Elegant 3d-party actions](#chapter5-elegant-3d-party-actions)
 
 ## Contents
 - [Awesome notes of Github actions](#awesome-notes-of-github-actions)
@@ -45,13 +45,18 @@ Supported runners and hardware resources:
 | 7GB of RAM memory      | 14GB of RAM memory     |
 | 14GB of SSD disk space | 14GB of SSD disk space |
 
-Certainly, it doesn't mean that there is no disadvantages for this pipeline platform. but who cares? Just enjoy it!
+However, these are the reasons only for we like it instead of using it by default without trade-off.
+
+> GitHub Actions has grown considerably last year. It has proven that it can take on more complex workflows and call other actions in composite actions among other things. It still has some shortcomings, though, such as its inability to re-trigger a single job of a workflow. Although the ecosystem in the GitHub Marketplace has its obvious advantages, giving third-party GitHub Actions access to your build pipeline risks sharing secrets in insecure ways.
+> ---[Thoughtworks Technology Radar](https://www.thoughtworks.com/radar/platforms/github-actions)
+
+Anyway, you are reading this blog, I know you have experience of using `Github actions`. you've come to the right place because of gread minds think alike!
 
 ## Chapter2 Actions tips
 
 ### 1. Share data among jobs
 
-Github actions forces that each job runs in a dedicated runner. There are two approaches we have:
+Github actions forces that each job runs in a dedicated runner. There are two approaches we have to share data among jobs:
 
 (1) Artifacts - upload/download files
 
@@ -206,7 +211,15 @@ So I make the two jobs become two separate workfolw. Leave the second one trigge
 
 ### 6. Reusable workflows
 
+> Rather than copying and pasting from one workflow to another, you can make workflows reusable.
+> ---[Github Actions](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
 
+There are three approaches to avoid duplication.
+1. scripts
+2. 3rdparty actions from marketplace - it's also script, but in the form of docker container or javascript actions.
+3. reusable workflows
+
+WIP
 
 ## Chapter3 Pipeline tips
 
