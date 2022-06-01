@@ -29,6 +29,7 @@ Documentation quardrants looks straightforward, right?
     - [sphinx](#sphinx)
       - [Get started with sphinx](#get-started-with-sphinx)
       - [Organize your documentation with sphinx](#organize-your-documentation-with-sphinx)
+      - [Deploy your sphinx docs](#deploy-your-sphinx-docs)
     - [Markdown in github](#markdown-in-github)
 
 ## Tutorials
@@ -187,6 +188,19 @@ Welcome to example's documentation!
 > :memo: **Note:** As it's memtioned above, `index.rst` is a `reST` file, we can replace it by `markdown` on demand. However, it's simple enough, No reason to change it in my opinion.
 
 Here is a real-life [example](https://devecorsoft.github.io/tinyoauth/) to preview.
+
+#### Deploy your sphinx docs
+
+The main reasion why we use doc generation tool such as sphinx is to deploy our documentation as a website. Even thought sphinx has ability to generate pdf, e-book, image and etc, we rarely use these functions.
+
+There are so many choices for deploying:
+
+* AWS S3 bucket
+* Github pages
+* server
+...
+
+> :memo: **Note:** the details of how-to deploy are beyound this blog.
     
 ### Markdown in github
 

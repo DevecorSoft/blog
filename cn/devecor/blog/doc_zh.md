@@ -22,13 +22,14 @@
 
  ## 目录
 
- - [文档象限实践参考](#文档象限实践参考)
+- [文档象限实践参考](#文档象限实践参考)
   - [序](#序)
   - [目录](#目录)
   - [实践参考](#实践参考)
     - [sphinx](#sphinx)
       - [浅接触sphinx](#浅接触sphinx)
       - [使用sphinx组织文档象限](#使用sphinx组织文档象限)
+      - [部署你的sphinx文档](#部署你的sphinx文档)
     - [markdown + github](#markdown--github)
 
 ## 实践参考
@@ -187,6 +188,17 @@ Welcome to example's documentation!
 > :memo: **Note:** `index.rst`采用的是`reStructuredText`标记语法，实践中可按需更换成`markdown`
 
 渲染效果，可参考[这里](https://devecorsoft.github.io/tinyoauth/)
+
+#### 部署你的sphinx文档
+
+多数情况下，使用sphinx的目的之一是生成可部署或托管的静态文件。尽管sphinx同时支持生成pdf，电子书或者图片等，我们却很少用到这些功能。
+
+常用的部署方式：
+* 国内云厂商的对象存储服务，AWS的S3储存桶
+* 各大代码托管平台提供`pages`托管服务，比如`Github pages`
+* 自有服务器上部署
+
+> :memo: **Note:** 关于部署的实现细节超出了本篇博客的范畴
 
 ### markdown + github
 
