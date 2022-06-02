@@ -1,6 +1,6 @@
 # Awesome notes of Github actions
 
-`11%` of this notes accomplished!
+`12%` of this notes accomplished!
 
 There are three kinds of tips:
 
@@ -31,11 +31,11 @@ There are three kinds of tips:
 
 ## Chapter1 Motivation
 
-I'm really like following features of Github Actions:
+The following features are my favourites:
 
-* Pipeline that is close to github repository!
-* Github hosted runners is provided!
-* Github Actions marketplace!
+* Unlike `jenkins`, It have Pipeline that is close to github repository. So you don't need any installation and configuration work.
+* Hundreds of 3rdparty actions in github marketplace that you may use to imporove your workflow.
+* Github offers hosted runners (with cpu time limitation), which are virtual machine with the GitHub Actions runner application installed.
 
 Supported runners and hardware resources:
 
@@ -45,7 +45,7 @@ Supported runners and hardware resources:
 | 7GB of RAM memory      | 14GB of RAM memory     |
 | 14GB of SSD disk space | 14GB of SSD disk space |
 
-However, these are the reasons only for we like it instead of using it by default without trade-off.
+Note that I'm not saying to use it by default without trade-off.
 
 > GitHub Actions has grown considerably last year. It has proven that it can take on more complex workflows and call other actions in composite actions among other things. It still has some shortcomings, though, such as its inability to re-trigger a single job of a workflow. Although the ecosystem in the GitHub Marketplace has its obvious advantages, giving third-party GitHub Actions access to your build pipeline risks sharing secrets in insecure ways.
 > ---[Thoughtworks Technology Radar](https://www.thoughtworks.com/radar/platforms/github-actions)
@@ -56,11 +56,11 @@ Anyway, you are reading this blog, I know you have experience of using `Github a
 
 ### 1. Share data among jobs
 
-Github actions forces that each job runs in a dedicated runner. There are two approaches we have to share data among jobs:
+Github actions forces that each job runs in a dedicated runner. There are two approaches to share data among jobs:
 
 (1) Artifacts - upload/download files
 
-Artifacts allow you to share data between jobs in a workflow and store data once that workflow has completed.
+Github Artifacts is actually http-based file uploading/downloading api. As we can see in the following diagram, the basic usage is to upload your files in leading job via [actions/upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact) and download the file with [actions/download-artifact](https://github.com/marketplace/actions/download-a-build-artifact) in postposition job.
 
 ```mermaid
 flowchart LR
@@ -77,7 +77,7 @@ flowchart LR
 
 Here is the simplest example:
 
-> :memo: **Note:** For simplicity's sake, let's keep the examples simple
+> :memo: **Note:** For simplicity's sake, I've hidden the context of workflow.
 
 ```yaml
   job1:
@@ -99,9 +99,11 @@ Here is the simplest example:
       - run: cat text.txt
 ```
 
-(2) job's outputs - read leading job's outputs
+> :memo: **Note:** do not forget to define prerequisite jobs: `needs: [job1, job2]`
 
-if case we have a dependent job and leading job have it's outputs, we can read the outputs by `needs.{leading job}.outputs.{leading job's outputs}` for example:
+(2) job's outputs - load leading job's outputs
+
+if a dependent job (with `needs` declaration) depends on the outputs from the leading job, data can be loaded through `needs.{leading job}.outputs.{leading job's outputs}`. e.g.
 
 ```yaml
 jobs:
@@ -117,6 +119,7 @@ jobs:
       - run: echo "${{ needs.job1.outputs.out }}"
 ```
 
+We can only send data in the form of `key-value` in this way. You're probably confused to `run: echo "::set-output name=my_output::hello"`, which is github actions workflow commands with special syntax. Concrete statement is beyond this blog, see details of [workflow command](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-setting-a-value)
 
 ### 2. Dependencies caches
 

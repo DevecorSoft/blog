@@ -102,6 +102,8 @@ flowchart LR
       - run: cat text.txt
 ```
 
+> :memo: **Note:** 注意这两个作业时存在依赖关系的，不要忘了设定下游作业的先决条件：`needs: [job1, job2]`
+
 - job's outputs - 共享简单数据
 
 若两个作业存在依赖关系, 前置作业拥有`outputs`，则可在下游作业中使用`needs.{leading job}.outputs.{leading job's outputs}`获得前置作业的输出，例如
@@ -119,6 +121,8 @@ jobs:
     steps:
       - run: echo "${{ needs.job1.outputs.out }}"
 ```
+
+值得注意的是，这种方法只能用来传递键值对数据，实例中的`run: echo "::set-output name=my_output::hello"` 可能会让人很费解，具体的语法超出本文想讨论的范畴，可参考官方文档[workflow command](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-setting-a-value)
 
 ### 2.依赖缓存
 
