@@ -1,6 +1,6 @@
 # Awesome notes of Github actions
 
-`11%` of this notes accomplished!
+`12%` of this notes accomplished!
 
 There are three kinds of tips:
 
@@ -18,6 +18,7 @@ There are three kinds of tips:
     - [3. Workflow badges](#3-workflow-badges)
     - [4. Publish your artifacts](#4-publish-your-artifacts)
     - [5. Share data among workflows](#5-share-data-among-workflows)
+    - [6. Reusable workflows](#6-reusable-workflows)
   - [Chapter3 Pipeline tips](#chapter3-pipeline-tips)
     - [1. Install ssh-keys](#1-install-ssh-keys)
     - [2. Version verification](#2-version-verification)
@@ -210,6 +211,18 @@ A tricky scenario that I have encountered is:
 The easiest way to achieve it is [github environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment). Unfortunately, github free plan didn't allow to try it in a private repository.
 
 So I make the two jobs become two separate workfolw. Leave the second one triggered by workflow call and fetch data from cache.
+
+### 6. Reusable workflows
+
+> Rather than copying and pasting from one workflow to another, you can make workflows reusable.
+> ---[Github Actions](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
+
+There are three approaches to avoid duplication.
+1. scripts
+2. 3rdparty actions from marketplace - it's also script, but in the form of docker container or javascript actions.
+3. reusable workflows
+
+WIP
 
 ## Chapter3 Pipeline tips
 
