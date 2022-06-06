@@ -171,7 +171,10 @@ If you are caching the package managers listed below, consider using the respect
 ### 3. Workflow badges
 
 Looks like：  
-![image.png](https://devecor.cn/image/1642245128077/image.png)
+![image](https://devecor.cn/image/1091f0fc-9786-462d-8eb5-f776df578be5/image.png)
+![image](https://devecor.cn/image/949fc671-9bcb-4a63-8e79-48842d34b7a9/image.png)
+
+It shows the real-time status of your ci pipeline, can be a monitor.
 
 Github actions will generate this badge by default. You can link it to your README file.
 

@@ -168,12 +168,16 @@ flowchart TB
 | gradle, maven    | setup-java                 |
 | ruby gems        | setup-ruby                 |
 
-note that：如果你的每次提交都会变更项目配置文件(package.json,pom.xml,build.gradle.kts等), 缓存会失效，原因是默认将这些文件哈希值（`hashFiles`）作为`key`, 此时你需要直接使用`action/cache`并提供自己的`key`
+> :memo: **Note:** 如果你的每次提交都会变更项目配置文件(package.json,pom.xml,build.gradle.kts等), 缓存会失效，原因是默认将这些文件哈希值（`hashFiles`）作为`key`, 此时你需要直接使用`action/cache`并提供自己的`key`
 
 
 ### 3.ci红绿状态徽章
+
 看起来是这样：  
-![image.png](https://devecor.cn/image/1642245128077/image.png)
+![image](https://devecor.cn/image/1091f0fc-9786-462d-8eb5-f776df578be5/image.png)
+![image](https://devecor.cn/image/949fc671-9bcb-4a63-8e79-48842d34b7a9/image.png)
+
+它会显示流水线的实时状态，可作为一个监视器。
 
 只要workflow存在，github就会为你生成状态徽章，可利用以下规则在readme中引用（在项目的actions里点击`Create status badge`复制链接最简单)
 
