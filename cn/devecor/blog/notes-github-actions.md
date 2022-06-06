@@ -59,7 +59,7 @@ Github actions forces that each job runs in a dedicated runner. There are two ap
 
 (1) Artifacts - upload/download files
 
-Github Artifacts is actually http-based file uploading/downloading api. As we can see in the following diagram, the basic usage is to upload your files in leading job via [actions/upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact) and download the file with [actions/download-artifact](https://github.com/marketplace/actions/download-a-build-artifact) in postposition job.
+Github Artifacts is actually http-based file uploading/downloading api. As we can see in the following diagram, the basic usage is to upload your files (plain text or compressed files for network transfer efficiency reason) in leading job via [actions/upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact) and download the file with [actions/download-artifact](https://github.com/marketplace/actions/download-a-build-artifact) in postposition job.
 
 ```mermaid
 flowchart LR
@@ -122,7 +122,13 @@ We can only send data in the form of `key-value` in this way. You're probably co
 
 ### 2. Dependencies caches
 
-Jobs on GitHub-hosted runners start in a clean virtual environment and must download dependencies each time, causing increased network utilization, longer runtime, and increased cost. To help speed up the time it takes to recreate these files, GitHub can cache dependencies you frequently use in workflows.
+> Jobs on GitHub-hosted runners start in a clean virtual environment and must download dependencies each time, causing increased network utilization, longer runtime, and increased cost. To help speed up the time it takes to recreate files like dependencies, GitHub can cache files you frequently use in workflows.
+> 
+> ---[Github actions doc](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
+
+Despite the fact that caching is a commonly used tool, I put it here as a tip because of immensely speed up your workflow run. the speed of download often greater than `120MBs/sec`:
+
+![image](https://devecor.cn/image/96c6c390-81ae-46bb-9f20-62fb3518a803/image.png)
 
 ```mermaid
 flowchart TB
@@ -158,6 +164,8 @@ If you are caching the package managers listed below, consider using the respect
 | pip, pipenv      | setup-python               |
 | gradle, maven    | setup-java                 |
 | ruby gems        | setup-ruby                 |
+
+> :memo: **Note:** if changes happens your project configuration file (package.json, pom.xml, build.gradle.kts, etc.) in each commit, you ain't gonna benefit from caching since you'll obtain a new key form the result of `hashFiles`, which causes you always store data and never load from caches.
 
 
 ### 3. Workflow badges

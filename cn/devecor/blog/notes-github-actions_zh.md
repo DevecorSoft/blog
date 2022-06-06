@@ -14,7 +14,7 @@
   - [动机篇](#动机篇)
   - [actions技巧篇](#actions技巧篇)
     - [1. 跨job的数据共享](#1-跨job的数据共享)
-    - [2.依赖缓存](#2依赖缓存)
+    - [2.依赖的缓存](#2依赖的缓存)
     - [3.ci红绿状态徽章](#3ci红绿状态徽章)
     - [4.发布你的应用](#4发布你的应用)
     - [5. 跨越workflow的数据共享](#5-跨越workflow的数据共享)
@@ -48,8 +48,8 @@ github actions因具有以下优点而深受笔者喜爱
 
 > GitHub Actions 的使用量在去年大幅增长。之前的使用经历已经证明它可以处理更复杂的工作流程，并在
 复合操作中调用其他操作。但是，它仍存在一些缺点，例如无法重新触发工作流的单个作业。尽管 GitHub
-Marketplace 中的生态系统有其明显的优势，但让作为第三方的 GitHub Actions 访问你的构建流水线可能会
-以不安全的方式共享机密信息
+Marketplace 中的生态系统有其明显的优势，但让作为第三方的 GitHub Actions 访问你的构建流水线可能会以不安全的方式共享机密信息
+> 
 > ---[Thoughtworks 技术雷达](https://www.thoughtworks.com/radar/platforms/github-actions)
 
 当你选择阅读本文，我知道你必定接触过`Github Actions`，相信本文中的玩法能让觉得英雄所见略同。
@@ -79,7 +79,7 @@ flowchart LR
 
 也许笔者应该在此处提供一个例子:
 
-> :memo: **Note:** 简单起见，还是让例子简单一点
+> :memo: **Note:** 简单起见，还是让例子简单一点（隐藏了工作流的其他部分）
 
 ```yaml
   job1:
@@ -123,7 +123,15 @@ jobs:
 
 值得注意的是，这种方法只能用来传递键值对数据，实例中的`run: echo "::set-output name=my_output::hello"` 可能会让人很费解，具体的语法超出本文想讨论的范畴，可参考官方文档[workflow command](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-setting-a-value)
 
-### 2.依赖缓存
+### 2.依赖的缓存
+
+> 在Gihtub托管的运行器上运行的作业开始于一个干净的虚拟环境，每次都会下载依赖。这造成了高网络占用，长运行时间和大的费用。Github能够通过缓存你在工作流中常用的文件来加速你的依赖下载时间。
+> 
+> ---[Github actions doc](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
+
+尽管缓存作为一个常用的手段，这个条目仍然出现在这里是因为其加速效果极其明显。下载速度直接拉满，常常高达`120MBs/sec`：
+
+![image](https://devecor.cn/image/96c6c390-81ae-46bb-9f20-62fb3518a803/image.png)
 
 ```mermaid
 flowchart TB
@@ -150,8 +158,6 @@ flowchart TB
           restore-keys: |
             ${{ runner.os }}-node-
 ```
-
-github actions 提供[依赖缓存](https://docs.github.com/cn/actions/advanced-guides/caching-dependencies-to-speed-up-workflows)功能加速你的ci/cd，适用于`Maven, Gradle, npm, and Yarn`等
 
 下列语言/平台的安装actions提供了`cache`参数，可供快速配置依赖缓存
 
