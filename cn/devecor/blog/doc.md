@@ -18,7 +18,7 @@ That's the reason why we need to follow [document quadrants](https://documentati
 | its form    | a lesson                           | a series of steps                    | dry description                   | discursive explanation                |
 | analogy     | teaching a small child how to cook | a recipe in a cookery book           | a reference encyclopaedia article | an article on culinary social history |
 
-Documentation quardrants looks straightforward, right?
+Documentation quadrants looks straightforward, right?
 
 ## Contents
 
@@ -38,26 +38,26 @@ Documentation quardrants looks straightforward, right?
 
 > :memo: **Note:** this is not a discussion of the Sphinx in ancient Egypt:blush:.
 
-[sphinx](https://www.sphinx-doc.org/en/master/) is the best document generation tool as far as I know. It was originally created for the Python documentation, and it has excellent facilities for the documentation of software projects in a range of languages.
+[sphinx](https://www.sphinx-doc.org/en/master/) is the best document generation tool as far as I know. It was originally created for the Python documentation. And it has excellent facilities for the documentation of software projects in a range of languages.
 
-we gonna talk about the practice for document quadrants with sphinx tool.
+we're gonna talk about the practice for document quadrants with sphinx tool.
 
 #### Get started with sphinx
 
-`sphinx` is been distributed to public as a 3rdparty library for `Python`. So you have to install a Python interpreter. Don't worry, we prepared two solutions to keep it simple no matter if you are familiar with Python.
+`sphinx` is been distributed to public as a 3rdparty library for `Python`. So you have to install a Python interpreter. Don't worry, I prepared two solutions to keep it simple no matter if you are familiar with Python.
 
-If you are aready a `Python` user, I highly recommend using [miniconda](https://docs.conda.io/en/latest/miniconda.html) to manage your python envirnments. You can have multiple python interpreters that are isolated from each other.
+If you are already a `Python` user, I highly recommend using [miniconda](https://docs.conda.io/en/latest/miniconda.html) to manage your python environment. It allows you to have multiple versions of python interpreters that are isolated from each other.
 
-You can test your miniconda installation with `conda -V`, and it's output like `conda 4.12.0`.
+You can test your miniconda installation with the command `conda -V`, and it will show the installed version.
 
-It's time to setup dedicated python interpreter for sphinx tool:
+Once you have the `conda`, you can setup a dedicated python interpreter for sphinx tool:
 
 ```sh
 conda create --name docs  python=3.10
 conda activate docs
 ```
 
-> :memo: **Note:** By default, miniconda will fallback to `base` interpreter if case you reopen terminal. we have to activate `docs` once again with `conda activate docs`.
+> :memo: **Note:** By default, miniconda will fallback to `base` interpreter if you reopen terminal. we have to activate `docs` environment once again with `conda activate docs`.
 
 Even if you havn't ever used `Python`, you probably an't gonna need to install a Python interpreter! By default, it's preinstalled for Mac users and most of Linux users. You can check it by `python3 -V`. But for windows users, you have to download it from [official website](https://www.python.org/downloads/).
 
