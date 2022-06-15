@@ -1,4 +1,4 @@
-# 文档象限实践参考
+# 于sphinx上实践文档象限
 
 实践一种行之有效的文档组织方式
 
@@ -17,12 +17,13 @@
 | 形如   | 一个课程             | 一系列步骤                 | 枯燥的描述         | 描述性的解释说明         |
 | 类似于 | 教一个小孩子如何做饭 | 一本烹饪书籍上的一条食谱   | 百科全书的参考文章 | 一篇关于烹饪社会史的文章 |
 
- 这会使你的文档看起来简单明了，对吧？
+这会使你的文档看起来简单明了，对吧？
 
+本文我们将探讨文档象限如何在`sphinx`这个工具上落地。
 
  ## 目录
 
-- [文档象限实践参考](#文档象限实践参考)
+- [于sphinx上实践文档象限](#于sphinx上实践文档象限)
   - [序](#序)
   - [目录](#目录)
   - [实践参考](#实践参考)
@@ -30,7 +31,6 @@
       - [浅接触sphinx](#浅接触sphinx)
       - [使用sphinx组织文档象限](#使用sphinx组织文档象限)
       - [部署你的sphinx文档](#部署你的sphinx文档)
-    - [markdown + github](#markdown--github)
 
 ## 实践参考
 
@@ -38,26 +38,18 @@
 
 注意，这里不是在讨论古埃及的狮身人面像:blush:，`sphinx`是笔者见过的一款很不错的文档工具，该工具最初是用来创建`Python`官方文档的，同时也很适合许多其他语言的软件项目的文档化。
 
-本文我们将探讨文档象限如何在`sphinx`这个工具上落地。
-
 #### 浅接触sphinx
 
-`sphinx`作为Python的一个第三方lib发行给用户。所以你得安装一个python的解释器。稍安勿躁，针对两种不同的人群，笔者准备了两种方案帮你安装它：
-
-如果你熟悉Python（最基本的了解即可），笔者推荐使用[miniconda](https://docs.conda.io/en/latest/miniconda.html)管理你的python环境。当然，你尽可以选择你喜欢的方式。
+`sphinx`作为Python的一个第三方lib发行给用户。所以你得安装一个python的解释器，笔者推荐使用[miniconda](https://docs.conda.io/en/latest/miniconda.html)管理你的python环境。当然，你尽可以选择你喜欢的方式。[^1]
 
 安装完miniconda之后，这个命令`conda -V`能显示miniconda的版本号，例如`conda 4.12.0`
 
-接下来为sphinx文档启用专用的python环境
+接下来为sphinx文档启用专用的python环境[^2]
 
 ```sh
 conda create --name docs  python=3.10
 conda activate docs
 ```
-
-> :memo: **Note:** 当你重新打开终端时，conda默认会切回`base`环境，需要时重新激活docs环境： `conda activate docs`
-
-如果你不熟悉Python，你很有可能不需要花力气去安装它，对于Mac用户和大多数Linux用户来讲，Python是预装在操作系统里的，使用`python3 -V`即可查看你当前是否安装了python解释器。对于windows用户，你需要从[python官方网站](https://www.python.org/downloads/)下载并安装。
 
 当你有了python解释器后，就能够安装sphinx及其扩展，保存下面的依赖到`requirements.txt`文件，便能使用`python -m pip install -r requirements.txt`安装它们。
 
@@ -67,8 +59,6 @@ sphinxcontrib-mermaid >= 0.7.1
 myst-parser >= 0.17.2
 sphinx-book-theme >= 0.3.2
 ```
-
-> :memo: **Note:** 你可能需要键入`python3`而不是`python`
 
 是时候初始化我们的文档了:
 
@@ -120,7 +110,7 @@ sphinx-build -b html docs/source/ docs/build/html
 
 效果如下：
 
-<img src="https://devecor.cn/image/21696a5e-1359-49d3-aef1-e36f706ee8ee/image.png" style="max-width:100%;"/>
+![sphinx-book-theme的效果图](https://devecor.cn/image/21696a5e-1359-49d3-aef1-e36f706ee8ee/image.png)
 
 
 #### 使用sphinx组织文档象限
@@ -189,6 +179,11 @@ Welcome to example's documentation!
 
 渲染效果，可参考[这里](https://devecorsoft.github.io/tinyoauth/)
 
+值得一提的是，reference文档通常不是开发者手动编写而来的，而是由工具生成而来。如何集成到我们的文档系统是个问题，可能的选择比较多，一个普适性较强同时也是笔者推荐的方式是：
+1. 利用工具生成html
+2. 与sphinx生成的html合并
+3. 在`reference/index.md`中加入链接指向reference的html，例如`# [Module Index](reference)`
+
 #### 部署你的sphinx文档
 
 多数情况下，使用sphinx的目的之一是生成可部署或托管的静态文件。尽管sphinx同时支持生成pdf，电子书或者图片等，我们却很少用到这些功能。
@@ -200,17 +195,5 @@ Welcome to example's documentation!
 
 > :memo: **Note:** 关于部署的实现细节超出了本篇博客的范畴
 
-### markdown + github
-
-`Github`作为全球最大的代码托管平台，对markdown的支持不可谓不好，近来，`Github`在过去一年里加入对`mermaid`绘图和常用图片显示的支持, 使得`markdown`在github上表现能力大幅提升。
-
-利用github本身作为文档系统已经成为一个不错的选择。所需无非四个文件夹而已：
-
-* tutorials
-* how-to guides
-* reference
-* explanation
-
-当然，你可能需要一个`README.md`作为入口文件，其中写上`Content index`， 像[这样](https://github.com/DevecorSoft/upimage/tree/main/docs)：
-
-![image](https://devecor.cn/image/ab5f8806-c615-4159-a418-26f717d320ae/image.png)
+[^1]: 如果你不熟悉Python，你很有可能不需要花力气去安装它，对于Mac用户和大多数Linux用户来讲，Python是预装在操作系统里的，使用`python3 -V`即可查看你当前是否安装了python解释器。注意在这个方案下你可能需要键入`python3`而不是`python`。对于windows用户，你需要从[python官方网站](https://www.python.org/downloads/)下载并安装。
+[^2]: 有时候你会关掉terminal，重新打开后，conda默认会切回`base`环境，需要时重新激活docs环境： `conda activate docs`
