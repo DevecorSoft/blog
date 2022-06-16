@@ -181,7 +181,7 @@ Welcome to example's documentation!
 
 值得一提的是，reference文档通常不是开发者手动编写而来的，而是由工具生成而来。如何集成到我们的文档系统是个问题，可能的选择比较多，一个普适性较强同时也是笔者推荐的方式是：
 1. 利用工具生成html
-2. 与sphinx生成的html合并
+2. 与sphinx生成的html合并, 例如`cp html build/html/reference`
 3. 在`reference/index.md`中加入链接指向reference的html，例如`# [Module Index](reference)`
 
 #### 部署你的sphinx文档
