@@ -19,6 +19,8 @@
 
 这会使你的文档看起来简单明了，对吧？
 
+相比于直接开发一个网站，采用文档生成工具能让事情变得容易一些。`sphinx`是笔者见过的一款很不错的文档生成工具，该工具最初是用来创建`Python`官方文档的，同时也很适合许多其他语言的软件项目的文档化。
+
 本文我们将探讨文档象限如何在`sphinx`这个工具上落地。
 
  ## 目录
@@ -27,18 +29,13 @@
   - [序](#序)
   - [目录](#目录)
   - [实践参考](#实践参考)
-    - [sphinx](#sphinx)
-      - [浅接触sphinx](#浅接触sphinx)
-      - [使用sphinx组织文档象限](#使用sphinx组织文档象限)
-      - [部署你的sphinx文档](#部署你的sphinx文档)
+    - [浅接触sphinx](#浅接触sphinx)
+    - [使用sphinx组织文档象限](#使用sphinx组织文档象限)
+    - [部署你的sphinx文档](#部署你的sphinx文档)
 
 ## 实践参考
 
-### sphinx
-
-注意，这里不是在讨论古埃及的狮身人面像:blush:，`sphinx`是笔者见过的一款很不错的文档工具，该工具最初是用来创建`Python`官方文档的，同时也很适合许多其他语言的软件项目的文档化。
-
-#### 浅接触sphinx
+### 浅接触sphinx
 
 `sphinx`作为Python的一个第三方lib发行给用户。所以你得安装一个python的解释器，笔者推荐使用[miniconda](https://docs.conda.io/en/latest/miniconda.html)管理你的python环境。当然，你尽可以选择你喜欢的方式。[^1]
 
@@ -67,7 +64,7 @@ sphinx-quickstart docs
 ```
 这会生成一个docs目录，[sphinx官方](https://www.sphinx-doc.org/en/master/tutorial/getting-started.html)已经给出了足够优秀的说明，本文不再赘述。
 
-看到这里你可能会疑惑上文中`requirements.txt`多余三个依赖包是干什么用的，让我一一解释：
+看到这里你可能会疑惑上文中`requirements.txt`多余三个依赖包是干什么用的，尽管它们都是可选的，却非常实用，让我一一解释：
 
 * [myst-parser](https://myst-parser.readthedocs.io/en/latest/index.html) - 一个sphinx扩展工具，能让你在sphinx下使用markdown编写你的文档(sphinx默认的文档标记语法是RestructuredText)
 * [sphinxcontrib-mermaid](https://myst-parser.readthedocs.io/en/latest/intro.html#extending-sphinx) - 支持`mermaid`绘图，配合myst-parser可以直接基于markdown进行绘图。例如：
@@ -113,7 +110,7 @@ sphinx-build -b html docs/source/ docs/build/html
 ![sphinx-book-theme的效果图](https://devecor.cn/image/21696a5e-1359-49d3-aef1-e36f706ee8ee/image.png)
 
 
-#### 使用sphinx组织文档象限
+### 使用sphinx组织文档象限
 
 按照文档象限的理念，我们需要使得我们的文档具有下列结构
 
@@ -184,7 +181,7 @@ Welcome to example's documentation!
 2. 与sphinx生成的html合并, 例如`cp html build/html/reference`
 3. 在`reference/index.md`中加入链接指向reference的html，例如`# [Module Index](reference)`
 
-#### 部署你的sphinx文档
+### 部署你的sphinx文档
 
 多数情况下，使用sphinx的目的之一是生成可部署或托管的静态文件。尽管sphinx同时支持生成pdf，电子书或者图片等，我们却很少用到这些功能。
 
