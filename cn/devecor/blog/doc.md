@@ -13,16 +13,16 @@ That's the reason why we need to follow the [document quadrants](https://documen
 >
 |             | Tutorials                          | How-to guides                        | Reference                         | Explanation                           |
 | ----------- | ---------------------------------- | ------------------------------------ | --------------------------------- | ------------------------------------- |
-| oriented to | learning                           | a goal                               | infomation                        | understanding                         |
+| oriented to | learning                           | a goal                               | information                        | understanding                         |
 | must        | allow the newcomer to get started  | show how to solve a specific problem | describe the machinery            | explain                               |
 | its form    | a lesson                           | a series of steps                    | dry description                   | discursive explanation                |
 | analogy     | teaching a small child how to cook | a recipe in a cookery book           | a reference encyclopaedia article | an article on culinary social history |
 
 Documentation quadrants look straightforward, right?
 
-To use document generation tool can make life easier, rather than develop a website. [sphinx](https://www.sphinx-doc.org/en/master/) is the best document generation tool as far as I know. It was originally created for the Python documentation. And it has excellent facilities for the documentation of software projects in a range of languages.
+Using a document generation tool can make life easier, rather than develop a website. [sphinx](https://www.sphinx-doc.org/en/master/) is the best document generation tool as far as I know. It was originally created for the Python documentation. And it has excellent facilities for the documentation of software projects in a range of languages.
 
-we're gonna talk about the practice for document quadrants with sphinx tool.
+we're gonna talk about the practice for document quadrants with the sphinx tool.
 
 ## Contents
 
@@ -51,7 +51,7 @@ conda create --name docs  python=3.10
 conda activate docs
 ```
 
-Once you have python interpreter, it become so easy to install sphinx and its extensions. Try to save them in `requirements.txt` file as follows, then you can install them with `python -m pip install -r requirements.txt`.
+Once you have a python interpreter, it becomes so easy to install sphinx and its extensions. Try to save them in `requirements.txt` file as follows, then you can install them with `python -m pip install -r requirements.txt`.
 
 ```
 sphinx >= 4.5.0
@@ -144,7 +144,7 @@ Assume that we have documentations with this structure:
     └── index.md
 ```
 
-The `toctree` directive in sphinx is adequate for our needs. Just declare four `toctree`s in `index.rst` which is entry point of sphinx.
+The `toctree` directive in sphinx is adequate for our needs. Just declare four `toctree`s in `index.rst` which is the entry point of sphinx.
 
 ```
 Welcome to example's documentation!
@@ -175,7 +175,7 @@ Welcome to example's documentation!
    reference/index
 ```
 
-> :memo: **Note:** As it's memtioned above, `index.rst` is a `reST` file, we can replace it by `markdown` on demand. However, it's simple enough, No reason to change it in my opinion.
+> :memo: **Note:** As it's mentioned above, `index.rst` is a `reST` file, we can replace it by `markdown` on demand. However, it's simple enough, No reason to change it in my opinion.
 
 Here is a real-life [example](https://devecorsoft.github.io/tinyoauth/) to preview.
 
@@ -187,7 +187,7 @@ Particularly worth mentioning is that `reference` is usually not written manuall
 
 ### Deploy your sphinx docs
 
-The main reason why we use doc generation tool such as sphinx is to deploy our documentation as a website. Even though sphinx has the ability to generate pdf, e-book, image, etc. we rarely use these functions.
+The main reason why we use doc generation tools such as sphinx is to deploy our documentation as a website. Even though sphinx has the ability to generate pdf, e-book, image, etc. we rarely use these functions.
 
 There are so many choices for deploying:
 
@@ -196,8 +196,8 @@ There are so many choices for deploying:
 * server
 ...
 
-> :memo: **Note:** the details of how-to deploy are beyound this blog.
+> :memo: **Note:** the details of how-to deploy are beyond this blog.
 
-[^1]: Even if you haven't ever used `Python`, you probably ain't gonna need to install a Python interpreter! By default, it's preinstalled for Mac users and most of Linux users. You can check it by execute the command `python3 -V`. But for Windows users, you have to download it from the [official website](https://www.python.org/downloads/).
+[^1]: Even if you haven't ever used `Python`, you probably ain't gonna need to install a Python interpreter! By default, it's preinstalled for Mac users and most Linux users. You can check it by executing the command `python3 -V`. But for Windows users, you have to download it from the [official website](https://www.python.org/downloads/).
 
 [^2]: By default, miniconda will jump to the `base` interpreter if you close the terminal and reopen it. We have to activate the `docs` environment once again with the command `conda activate docs`.
