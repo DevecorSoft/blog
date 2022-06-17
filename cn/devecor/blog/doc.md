@@ -4,9 +4,9 @@ Practicing a handy way to ensure the right documentation is being produced.
 
 ## Introduction
 
-> It doesn’t matter how good your product is, because if its documentation is not good enough, people will not use it. Even if they have to use it because they have no choice, without good documentation, they won’t use it effectively or the way you’d like them to.
+> It doesn’t matter how good your product is, Because if its documentation is not good enough, people will not use it. Even if they have to use it because they have no choice, without good documentation, they won’t use it effectively or the way you’d like them to.
 
-That's the reason why we need to follow [document quadrants](https://documentation.divio.com/introduction/) pattern.
+That's the reason why we need to follow the [document quadrants](https://documentation.divio.com/introduction/) pattern.
 
 
 > Documentation needs to include and be structured around its four different functions: **tutorials, how-to guides, technical reference and explanation**. Each of them requires a distinct mode of writing.
@@ -18,7 +18,9 @@ That's the reason why we need to follow [document quadrants](https://documentati
 | its form    | a lesson                           | a series of steps                    | dry description                   | discursive explanation                |
 | analogy     | teaching a small child how to cook | a recipe in a cookery book           | a reference encyclopaedia article | an article on culinary social history |
 
-Documentation quadrants looks straightforward, right?
+Documentation quadrants look straightforward, right?
+
+To use document generation tool can make life easier, rather than develop a website. [sphinx](https://www.sphinx-doc.org/en/master/) is the best document generation tool as far as I know. It was originally created for the Python documentation. And it has excellent facilities for the documentation of software projects in a range of languages.
 
 we're gonna talk about the practice for document quadrants with sphinx tool.
 
@@ -28,22 +30,15 @@ we're gonna talk about the practice for document quadrants with sphinx tool.
   - [Introduction](#introduction)
   - [Contents](#contents)
   - [Tutorials](#tutorials)
-    - [sphinx](#sphinx)
-      - [Get started with sphinx](#get-started-with-sphinx)
-      - [Organize your documentation with sphinx](#organize-your-documentation-with-sphinx)
-      - [Deploy your sphinx docs](#deploy-your-sphinx-docs)
+    - [Get started with sphinx](#get-started-with-sphinx)
+    - [Organize your documentation with sphinx](#organize-your-documentation-with-sphinx)
+    - [Deploy your sphinx docs](#deploy-your-sphinx-docs)
 
 ## Tutorials
 
-### sphinx
+### Get started with sphinx
 
-> :memo: **Note:** this is not a discussion of the Sphinx in ancient Egypt:blush:.
-
-[sphinx](https://www.sphinx-doc.org/en/master/) is the best document generation tool as far as I know. It was originally created for the Python documentation. And it has excellent facilities for the documentation of software projects in a range of languages.
-
-#### Get started with sphinx
-
-`sphinx` is been distributed to public as a 3rdparty library for `Python`. So you have to install a Python interpreter.
+`sphinx` has been distributed to public as a 3rd-party library for `Python`. So you have to install a Python interpreter.
 
 If you are already a `Python` user, I highly recommend using [miniconda](https://docs.conda.io/en/latest/miniconda.html) to manage your python environment. It allows you to have multiple versions of python interpreters that are isolated from each other. [^1]
 
@@ -73,7 +68,7 @@ Now, everything is all right, we are able to initialize our documentation:
 sphinx-quickstart docs
 ```
 
-This will generate several files in `docs` folder. and [sphinx official doc](https://www.sphinx-doc.org/en/master/tutorial/getting-started.html) give your some explanations about them. Please take time to read it.
+This will generate several files in the `docs` folder. And the [sphinx official doc](https://www.sphinx-doc.org/en/master/tutorial/getting-started.html) gives you some explanations about them. Please take some time to read it.
 
 You're probably confused with so many dependencies in `requirements.txt`. Each of them is optional but quite useful:
 
@@ -116,13 +111,13 @@ Then you can generate your docs into `html`:
 sphinx-build -b html docs/source/ docs/build/html
 ```
 
-it looks pretty good.
+It looks pretty good.
 
 ![preview sphinx-book-theme](https://devecor.cn/image/21696a5e-1359-49d3-aef1-e36f706ee8ee/image.png)
 
-#### Organize your documentation with sphinx
+### Organize your documentation with sphinx
 
-As the principle of document quadrants, we'd better to structure our documentation with four functionalities. e.g.
+As the principle of document quadrants, we're supposed to structure our documentation with four functionalities. e.g.
 
 * tutorials
   * create your project
@@ -149,7 +144,7 @@ Assume that we have documentations with this structure:
     └── index.md
 ```
 
-I noticed that `toctree` directive in sphinx is adequate for our needs. Just declare four `toctree`s in `index.rst` which is entry point of sphinx.
+The `toctree` directive in sphinx is adequate for our needs. Just declare four `toctree`s in `index.rst` which is entry point of sphinx.
 
 ```
 Welcome to example's documentation!
@@ -184,15 +179,15 @@ Welcome to example's documentation!
 
 Here is a real-life [example](https://devecorsoft.github.io/tinyoauth/) to preview.
 
-Particularly worth mentioning is that `reference` is usually not written manually by the developer, but generated by some tools such as `javadoc` and `jsdoc`. How to integrate with sphinx can be a problem. we have to weigh up pros and cons carefully, althought there are many options. A general approach (recommended) is:
+Particularly worth mentioning is that `reference` is usually not written manually by the developer, but generated by some tools such as `javadoc` and `jsdoc`. How to integrate with sphinx can be a problem. We have to weigh up the pros and cons carefully, although there are many options. A general approach (recommended) is:
 
 1. generate `html` with the tool you are using.
 2. merge it into sphinx build directory such as `cp html build/html/reference`
 3. add link in `reference/index.md` e.g. `# [Module Index](reference)`
 
-#### Deploy your sphinx docs
+### Deploy your sphinx docs
 
-The main reasion why we use doc generation tool such as sphinx is to deploy our documentation as a website. Even thought sphinx has ability to generate pdf, e-book, image and etc, we rarely use these functions.
+The main reason why we use doc generation tool such as sphinx is to deploy our documentation as a website. Even though sphinx has the ability to generate pdf, e-book, image, etc. we rarely use these functions.
 
 There are so many choices for deploying:
 
@@ -203,6 +198,6 @@ There are so many choices for deploying:
 
 > :memo: **Note:** the details of how-to deploy are beyound this blog.
 
-[^1]: Even if you havn't ever used `Python`, you probably an't gonna need to install a Python interpreter! By default, it's preinstalled for Mac users and most of Linux users. You can check it by `python3 -V`. But for windows users, you have to download it from [official website](https://www.python.org/downloads/).
+[^1]: Even if you haven't ever used `Python`, you probably ain't gonna need to install a Python interpreter! By default, it's preinstalled for Mac users and most of Linux users. You can check it by execute the command `python3 -V`. But for Windows users, you have to download it from the [official website](https://www.python.org/downloads/).
 
-[^2]: By default, miniconda will jump to `base` interpreter if you close the terminal and reopen it. we have to activate `docs` environment once again with `conda activate docs`.
+[^2]: By default, miniconda will jump to the `base` interpreter if you close the terminal and reopen it. We have to activate the `docs` environment once again with the command `conda activate docs`.
