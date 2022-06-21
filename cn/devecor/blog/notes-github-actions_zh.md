@@ -1,12 +1,14 @@
 # Github actions 的100个实用技巧
 
-`11/100`个实用小技巧，希望能写到100个
+100个Github actions实用小技巧。已完成`11%`
 
 本文收录的所有技巧分为三类：
 
 1. Github actions官方文档中存在，而笔者认为需要highlight出来的技巧，见[actions技巧篇](#actions技巧篇)
 2. Github actions官方文档中不存在，由笔者实践经验总结而来，见[pipeline技巧篇](#pipeline技巧篇)和[实践技巧篇](#实践技巧篇)
 3. 笔者认为非常优雅的第三方Actions名录，见[优雅的第三方Actions](#优雅的第三方actions)
+
+本文并不是一篇适合用来入门`Github actions`的文章，我推荐你完成官方文档的教程[Learn github actions](https://docs.github.com/en/actions/learn-github-actions)。若你在实践中遇到麻烦，相信本文能带给你惊喜。
 
 ## 目录
 - [Github actions 的100个实用技巧](#github-actions-的100个实用技巧)
@@ -15,28 +17,33 @@
   - [actions技巧篇](#actions技巧篇)
     - [1. 跨job的数据共享](#1-跨job的数据共享)
     - [2.依赖的缓存](#2依赖的缓存)
-    - [3.ci红绿状态徽章](#3ci红绿状态徽章)
-    - [4.发布你的应用](#4发布你的应用)
-    - [5. 跨越workflow的数据共享](#5-跨越workflow的数据共享)
+    - [3. 作业的矩阵策略](#3-作业的矩阵策略)
+    - [4.ci红绿状态徽章](#4ci红绿状态徽章)
+    - [5. 一个可手动触发工作流的选项](#5-一个可手动触发工作流的选项)
+    - [6. using OIDC](#6-using-oidc)
   - [pipeline技巧篇](#pipeline技巧篇)
     - [1.安装ssh-keys](#1安装ssh-keys)
+    - [3. 为作业设置超时](#3-为作业设置超时)
+    - [4. 避免在不信任的runner上安装凭证](#4-避免在不信任的runner上安装凭证)
     - [2.版本号提升验证](#2版本号提升验证)
   - [实践技巧篇](#实践技巧篇)
     - [1. 自托管runner的时机](#1-自托管runner的时机)
     - [2. 用以效率化脚本测试](#2-用以效率化脚本测试)
     - [3. 使用github organization共享pipeline资源](#3-使用github-organization共享pipeline资源)
+    - [4. 适当限制actions的权限](#4-适当限制actions的权限)
   - [优雅的第三方Actions](#优雅的第三方actions)
     - [1.覆盖率徽章](#1覆盖率徽章)
+    - [4.发布你的应用](#4发布你的应用)
 
 ## 动机篇
 
-github actions因具有以下优点而深受笔者喜爱
+github actions因具有以下优点而深受笔者喜爱：
 
-* 源代码旁直接构建流水线
+* 生来就具有Github生态优势，可轻易自动化的使用`github package`，`github pages`，`issue/pull_request`等。
+* `99%`的功能都是可选的，易用性极高，你经常会惊喜的发现满足需求的新特性，官方早已准备好。
 * 没有额外的服务器成本，github官方会提供性能可观的运行器
-* actions marketplace 具有生态优势
 
-支持的运行器和硬件资源
+支持的运行器和硬件资源：
 
 | Windows/Linux      | MaxOS              |
 | ------------------ | ------------------ |
@@ -51,8 +58,6 @@ github actions因具有以下优点而深受笔者喜爱
 Marketplace 中的生态系统有其明显的优势，但让作为第三方的 GitHub Actions 访问你的构建流水线可能会以不安全的方式共享机密信息
 > 
 > ---[Thoughtworks 技术雷达](https://www.thoughtworks.com/radar/platforms/github-actions)
-
-当你选择阅读本文，我知道你必定接触过`Github Actions`，相信本文中的玩法能让觉得英雄所见略同。
 
 ## actions技巧篇
 
@@ -101,7 +106,7 @@ flowchart LR
       - run: cat text.txt
 ```
 
-> :memo: **Note:** 注意这两个作业时存在依赖关系的，不要忘了设定下游作业的先决条件：`needs: [job1, job2]`
+> :memo: **Note:** 注意这两个作业时存在依赖关系的，不要忘了设定下游作业的先决条件：`needs: [job1]`
 
 - job's outputs - 共享简单数据
 
@@ -171,7 +176,10 @@ flowchart TB
 > :memo: **Note:** 如果你的每次提交都会变更项目配置文件(package.json,pom.xml,build.gradle.kts等), 缓存会失效，原因是默认将这些文件哈希值（`hashFiles`）作为`key`, 此时你需要直接使用`action/cache`并提供自己的`key`
 
 
-### 3.ci红绿状态徽章
+### 3. 作业的矩阵策略
+
+
+### 4.ci红绿状态徽章
 
 看起来是这样：  
 ![image](https://devecor.cn/image/1091f0fc-9786-462d-8eb5-f776df578be5/image.png)
@@ -185,48 +193,12 @@ flowchart TB
 [![<your workflow name>](https://github.com/<user>/<repo>/actions/workflows/<workflow>.yml/badge.svg)](https://github.com/<user>/<repo>/actions/workflows/<workflow>.yml)
 ```
 
+### 5. 一个可手动触发工作流的选项
+在ci/cd实践还没那么成熟时，这是一个可选项
 
-### 4.发布你的应用
+### 6. using OIDC
 
-* 在ci中发布到github package
-  * github提供[github packages registry](https://docs.github.com/cn/packages/working-with-a-github-packages-registry)
-* 在ci中发布github release
-  * 可使用`actions/upload-release-asset`上传到github release
 
-```yaml
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ env.UPLOAD_URL }}
-          asset_path: ./build/libs/upimage-${{ env.UPIMAGE_VERSION }}.jar
-          asset_name: upimage-${{ env.UPIMAGE_VERSION }}.jar
-          asset_content_type: application/zip
-```
-
-![image.png](https://devecor.cn/image/1642248127587/image.png)
-
-### 5. 跨越workflow的数据共享
-
-当我们希望跨job共享数据的时候使用`github artifacts`,那么跨越workflow的数据共享呢？
-
-答案是`actions/cache@v2`, 你没有看错就是前文依赖缓存用的cache
-
-首先，我认为实践中应尽量避免跨越workflow的共享数据，job中可以完成足够多的事情。
-
-即便你遇到了不得不用的场景，也请克制：
-
-1. 保持数据短命，github有存储限制，达到或者过期会被删除或者覆盖掉
-2. 避免敏感数据，对于同`pull_request`触发的工作流来说，缓存的数据可以轻易拿到
-
-笔者所遇到的一个应用场景是：
-
-存在两个串行的job，第二个依赖于第一个job，并且希望第二个job必须得到人工确认才能执行。
-
-最简单的办法是使用github environment, 不幸的是，github free plan的私仓不支持这一特性，同时不想花钱买github enterprise plan。
-
-于是将这两个job拆成两个workflow，第二个由人工手动触发，并使用`actions/cache@v2`共享数据。
 
 ## pipeline技巧篇
 
@@ -260,6 +232,10 @@ flowchart TB
 
 > :memo: **Note:** 值得注意的是，我们最好在部署步骤结束后移除你的key-pair凭证。但是如果你的部署步骤失败了，移除key-pair的步骤就得不到执行，不要忘记给你用来部署的步骤加上`continue-on-error: true`声明。
 
+### 3. 为作业设置超时
+
+### 4. 避免在不信任的runner上安装凭证
+
 ### 2.版本号提升验证
 
 持续集成部署常常伴随着版本号的快速更迭，各类打包和发布平台都需要一个独一无二的版本号标识当前构建。没有理由抛开版本号不用，对吧？
@@ -275,6 +251,7 @@ flowchart TB
 
 * 私仓，商业团队使用,超出免费的500M/2000分钟额度并希望节省成本之时。
 * 希望保护在ci中使用的secrets之时。
+* 自定义github-hosted runner没有提供的环境时。
 
 建议不要使用自托管运行器的情况：
 
@@ -287,6 +264,17 @@ flowchart TB
 1. mac一行命令安装一个[docker的代替品](https://github.com/DevecorSoft/DockerDesktopAlternative)：这个项目利用了github actions提供的`macos-latest`测试环境
 
 ### 3. 使用github organization共享pipeline资源
+出于便利性考虑
+
+> An organization allows you to centrally store and manage secrets, artifacts, and self-hosted runners. You can also create starter workflows in the .github repository and share them with other users in your organization.
+> 
+> ---github actions doc
+
+
+### 4. 适当限制actions的权限
+出于安全性的考虑
+
+https://docs.github.com/en/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization
 
 
 ## 优雅的第三方Actions
@@ -303,4 +291,26 @@ actions 地址:
 
 * 基于jacoco的徽章生成器: [cicirello/jacoco-badge-generator](https://github.com/marketplace/actions/jacoco-badge-generator)
 * 通用徽章生成器： [badgen](https://github.com/badgen/badgen.net)
+
+
+### 4.发布你的应用
+
+* 在ci中发布到github package
+  * github提供[github packages registry](https://docs.github.com/cn/packages/working-with-a-github-packages-registry)
+* 在ci中发布github release
+  * 可使用`actions/upload-release-asset`上传到github release
+
+```yaml
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ env.UPLOAD_URL }}
+          asset_path: ./build/libs/upimage-${{ env.UPIMAGE_VERSION }}.jar
+          asset_name: upimage-${{ env.UPIMAGE_VERSION }}.jar
+          asset_content_type: application/zip
+```
+
+![image.png](https://devecor.cn/image/1642248127587/image.png)
 
