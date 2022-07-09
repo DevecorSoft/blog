@@ -1,6 +1,6 @@
-# Awesome notes of Github actions
+# Effective Github actions
 
-`11%` of this notes accomplished!
+100 specific ways to write better workflows. `11%` of this notes accomplished!
 
 There are three kinds of tips:
 
@@ -9,7 +9,7 @@ There are three kinds of tips:
 3. The elegant items from the third party actions from my point of view. See [Chapter5 Elegant 3d-party actions](#chapter5-elegant-3d-party-actions)
 
 ## Contents
-- [Awesome notes of Github actions](#awesome-notes-of-github-actions)
+- [Effective Github actions](#effective-github-actions)
   - [Contents](#contents)
   - [Chapter1 Motivation](#chapter1-motivation)
   - [Chapter2 Actions tips](#chapter2-actions-tips)
@@ -47,6 +47,7 @@ Supported runners and hardware resources:
 Note that I'm not saying to use it by default without trade-off.
 
 > GitHub Actions has grown considerably last year. It has proven that it can take on more complex workflows and call other actions in composite actions among other things. It still has some shortcomings, though, such as its inability to re-trigger a single job of a workflow. Although the ecosystem in the GitHub Marketplace has its obvious advantages, giving third-party GitHub Actions access to your build pipeline risks sharing secrets in insecure ways.
+> 
 > ---[Thoughtworks Technology Radar](https://www.thoughtworks.com/radar/platforms/github-actions)
 
 Anyway, you are reading this blog, I know you have experience of using `Github actions`. you've come to the right place because of gread minds think alike!

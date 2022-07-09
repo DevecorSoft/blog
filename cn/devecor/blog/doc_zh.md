@@ -172,6 +172,8 @@ Welcome to example's documentation!
    reference/index
 ```
 
+> :memo: **Note:** `index.rst` 中的相对路径是基于 `docs/source` 的路径.
+
 > :memo: **Note:** `index.rst`采用的是`reStructuredText`标记语法，实践中可按需更换成`markdown`
 
 渲染效果，可参考[这里](https://devecorsoft.github.io/tinyoauth/)

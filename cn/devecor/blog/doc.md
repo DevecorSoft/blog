@@ -175,6 +175,8 @@ Welcome to example's documentation!
    reference/index
 ```
 
+> :memo: **Note:** Keep in mind that the relative path in `index.rst` is based on your `docs/source` folder.
+
 > :memo: **Note:** As it's mentioned above, `index.rst` is a `reST` file, we can replace it by `markdown` on demand. However, it's simple enough, No reason to change it in my opinion.
 
 Here is a real-life [example](https://devecorsoft.github.io/tinyoauth/) to preview.
