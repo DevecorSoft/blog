@@ -31,6 +31,7 @@
 - 始终是一个统一的范围性标准
 - 团队可以根据实际情况更改这个标准
 - 某些情况需要手动将特定函数排除在lint规则之外
+- 允许的max-lines越大，收益就越小
 
 ## 结论
 
@@ -39,4 +40,7 @@
 1. 有少量warning存在的事实
 2. code review中达成一致后，手动将特定函数排除在lint规则之外
 
+## 相关链接
+
+1. [eslint disabling rules](https://eslint.org/docs/latest/user-guide/configuring/rules#disabling-rules)
 
