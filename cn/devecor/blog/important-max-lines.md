@@ -1,5 +1,7 @@
 # Why we need a concrete `max-lines` limitation?
 
+linter vs code review
+
 ## Context and Problem Statement
 
 We're using `eslint` rule of `max-lines-per-function` to keep our function simple and foolish. However, It's annoying for linter to complain that function has exceeded the limit of lines.
