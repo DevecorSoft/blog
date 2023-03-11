@@ -21,6 +21,7 @@
     - [4.ci红绿状态徽章](#4ci红绿状态徽章)
     - [5. 一个可手动触发工作流的选项](#5-一个可手动触发工作流的选项)
     - [6. using OIDC](#6-using-oidc)
+    - [7. 高网络延迟下的Checkout](#7-高网络延迟下的checkout)
   - [pipeline技巧篇](#pipeline技巧篇)
     - [1.安装ssh-keys](#1安装ssh-keys)
     - [3. 为作业设置超时](#3-为作业设置超时)
@@ -56,7 +57,7 @@ github actions因具有以下优点而深受笔者喜爱：
 > GitHub Actions 的使用量在去年大幅增长。之前的使用经历已经证明它可以处理更复杂的工作流程，并在
 复合操作中调用其他操作。但是，它仍存在一些缺点，例如无法重新触发工作流的单个作业。尽管 GitHub
 Marketplace 中的生态系统有其明显的优势，但让作为第三方的 GitHub Actions 访问你的构建流水线可能会以不安全的方式共享机密信息
-> 
+>
 > ---[Thoughtworks 技术雷达](https://www.thoughtworks.com/radar/platforms/github-actions)
 
 ## actions技巧篇
@@ -131,7 +132,7 @@ jobs:
 ### 2.依赖的缓存
 
 > 在Gihtub托管的运行器上运行的作业开始于一个干净的虚拟环境，每次都会下载依赖。这造成了高网络占用，长运行时间和大的费用。Github能够通过缓存你在工作流中常用的文件来加速你的依赖下载时间。
-> 
+>
 > ---[Github actions doc](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
 
 尽管缓存作为一个常用的手段，这个条目仍然出现在这里是因为其加速效果极其明显。下载速度直接拉满，常常高达`120MBs/sec`：
@@ -181,7 +182,7 @@ flowchart TB
 
 ### 4.ci红绿状态徽章
 
-看起来是这样：  
+看起来是这样：
 ![image](https://devecor.cn/image/1091f0fc-9786-462d-8eb5-f776df578be5/image.png)
 ![image](https://devecor.cn/image/949fc671-9bcb-4a63-8e79-48842d34b7a9/image.png)
 
@@ -198,7 +199,54 @@ flowchart TB
 
 ### 6. using OIDC
 
+### 7. 高网络延迟下的Checkout
 
+处于种种原因，你决定使用`self-hosted runner`运行部分或者全部的流水线作业，然后你大概率会恼怒于任务以Checkout超时告终。
+通常，一个流水线会经历：签出代码 --> 安装 --> 测试 --> 打包 --> 部署 这样的过程，简单起见，我将后四个步骤统称为构建：
+
+- checkout
+- build
+
+在高延迟的环境下会慢的难以接受。我们通常有若干种解决办法：
+
+1. 给runner配置代理
+2. 购买境外实例作为runner
+3. 放弃github迁移到其他平台，如Jenkins + gitee
+
+幸运的是，我们还有更为简单的第四种选择：选择国内的代码托管平台作为镜像
+
+以阿里云为例：
+
+- setup: codeup repo，ACR
+- 配置checkout
+- 配置镜像源/docker image 缓存依赖
+
+```mermaid
+flowchart LR
+  subgraph Firewall
+    codeup[codeup repo]
+    local
+    subgraph acr[container registry]
+      baseImage[images for test/build]
+      artifacts
+    end
+    subgraph runner[self-hosted runner]
+      direction TB
+      checkout
+      build
+    end
+    codeup -.f7c3840e.-> checkout --fetch--> codeup
+    acr -.image.-> build --docker run/push--> acr
+  end
+
+  github[github repo]
+  action[github action]
+
+  local -.f7c3840e.-> github
+  local -.f7c3840e.-> codeup
+  github --trigger--> action --invoke--> runner
+  action -.secrets/credentials.-> runner
+```
 
 ## pipeline技巧篇
 
@@ -220,7 +268,7 @@ flowchart TB
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.TARGET_SERVER }}" >> ~/.ssh/known_hosts
-      
+
       - name: Your step for deploy
         continue-on-error: true
         run: |
@@ -267,7 +315,7 @@ flowchart TB
 出于便利性考虑
 
 > An organization allows you to centrally store and manage secrets, artifacts, and self-hosted runners. You can also create starter workflows in the .github repository and share them with other users in your organization.
-> 
+>
 > ---github actions doc
 
 
@@ -287,7 +335,7 @@ https://docs.github.com/en/organizations/managing-organization-settings/disablin
 
 最简单的用法莫过于在ci中生成svg格式的徽章提交到代码库, 最后在readme文件中使用相对路径引用
 
-actions 地址: 
+actions 地址:
 
 * 基于jacoco的徽章生成器: [cicirello/jacoco-badge-generator](https://github.com/marketplace/actions/jacoco-badge-generator)
 * 通用徽章生成器： [badgen](https://github.com/badgen/badgen.net)
