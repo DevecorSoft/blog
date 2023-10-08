@@ -4,13 +4,41 @@
 
 Graduated from Xi'an NorthWest University in 2020.
 
-Solid understanding of OOP, MVP principles.
+Solid understanding of OOP, MVP/MVVM principles. Can be an FP programmer.
 
-Familiar with back-end language such as Java, Kotlin, NodeJS, Python etc.
+Familiar with multiple languages such as Java, Kotlin, Python, Typescript etc.
 
 Extensive practical experience in CI/CD and TDD.
 
 ## Previous Experience
+
+### Consultant, Thoughtworks, Beeart, Xi'an, China 2023.1 - now
+
+Be part of 181 training program project as a trainee.
+
+#### Tech stack:
+Nest.js, Quarkus, React, Yjs, Docker, Genkins, Kubernetes
+
+#### Role:
+* Develop UI and backend websocket/http APIs
+* Develop whiteboard sdk based on canvas
+* Design test strategies in current architecture vision
+* Practice strict TDD
+* Wear BA's hat to write ACs of a story
+* Continuously optimize performance of collaborative server
+* To implement DDD with Smart Domain pattern
+
+### Consultant, Mercedes-Benz AG, OneDms, Xi'an, China 2022.6 - 2022.9
+
+To play a full-stack developer and take responsibility of developing an appointment booking system. Designing validation strategies for complex vehicle maintenance operations.
+
+#### Tech stack:
+Express.js, React, Docker, Github actions
+
+#### Role:
+* Develop UI and backend APIs
+* Designing validation strategies
+* Practice trunk-based development and CI/CD
 
 ### Consultant, Sadapay, Xi'an, China 2021.7 - 2022.2
 
@@ -20,7 +48,7 @@ Mainly responsible for Back-end development of money transfer system, which is a
 Spring boot, Kafka, Docker, Openapi
 
 #### Role:
-* Design and develop restful APIs 
+* Design and develop restful APIs
 * Practice trunk-based development and CI/CD
 
 ### Founder, devecor.cn, Xi'an, China 2021.7 - now
@@ -36,7 +64,7 @@ Spring boot(kotlin), Django, Docker, Vue.js, Aliyun ECS
 * Design restful APIs
 * Containerize all artifacts by docker for deployment
 * Develop front-end and back-end system
-* Pracrice TDD/Trunk-based development/CI/CD
+* Practice TDD/Trunk-based development/CI/CD
 
 ### Software Developer, Bankinglive!, Xi'an, China 2020.10 - 2021.6
 
@@ -48,19 +76,19 @@ This project is an online banking systems that allows financial services to be p
 ## Skills
 
 ### Backend
-* Spring boot with Java and Kotlin
+* Spring with Java and Kotlin
+* Quarkus
 * Django/Flask with Python
 * Redis/postgres/Mysql
 
 ### Frontend
-* Quite familiar with Vue.js
-* Responsive Web design
-* jQuery
+* Quite familiar with Vue.js/React
+* Responsive Web design and data driven patterns
 * Android development experience
 
 ### Other
-* AWS VPC/EC2/ECR, etc,
-* Containerize artifacts/services/applications by Docker
+* AWS VPC/EC2/ECR, etc.
+* Containerize tools like Docker, Kubernetes, etc.
 * Experience in using pipeline platform e.g. Github actions, Jenkins.
 * Do well in Bash/Nodejs/Python scripts
 

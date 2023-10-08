@@ -41,7 +41,7 @@
 
 ### 浅接触sphinx
 
-`sphinx`作为Python的一个第三方lib发行给用户。所以你得安装一个python的解释器，笔者推荐使用[miniconda](https://docs.conda.io/en/latest/miniconda.html)管理你的python环境。当然，你尽可以选择你喜欢的方式。[^2]
+`sphinx`作为Python的一个第三方lib发行给用户。所以你得安装一个python的解释器，笔者推荐使用[miniconda](https://docs.conda.io/en/latest/miniconda.html)管理你的python环境。当然，你尽可以选择你喜欢的方式。[^1]
 
 安装完miniconda之后，这个命令`conda -V`能显示miniconda的版本号，例如`conda 4.12.0`
 
