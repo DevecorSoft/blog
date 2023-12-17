@@ -126,7 +126,7 @@ jobs:
     steps:
       - run: echo "${{ needs.job1.outputs.out }}"
 ```
-
+缺个截图
 值得注意的是，这种方法只能用来传递键值对数据，实例中的`run: echo "::set-output name=my_output::hello"` 可能会让人很费解，具体的语法超出本文想讨论的范畴，可参考官方文档[workflow command](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-setting-a-value)
 
 ### 2.依赖的缓存
