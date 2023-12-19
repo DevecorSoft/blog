@@ -1,30 +1,30 @@
-# 区别测试替身有什么用？
+# What is the purpose of differentiating test doubles？
 
-用明确定义的测试来替身描述测试策略尤其好用，对指导开发者编写符合架构约定的测试很有帮助，并且极大的降低了TDD的实践门槛。
+Using well-defined test doubles to describe testing strategies can be particularly useful in guiding developers to write tests that adhere to architectural conventions. It can greatly reduce the learning curve for practicing Test-Driven Development (TDD).
 
-## 测试替身
-一组被老马认为应当广泛传播的[测试替身](https://martinfowler.com/bliki/TestDouble.html):
+## Test doubles
+Here is a collection of widely recognized [test doubles](https://martinfowler.com/bliki/TestDouble.html) that are considered important to be widely disseminated:
 
-- **Dummy**: 只进行传递，从不使用的`object`。通常被用来填充参数列表。
-- **Fake**: 存在有用实现的`object`。但是其实现通常抄捷径，不能用于生产。处于内存中的测试数据库是个好例子。
-- **Stub**: 提供现成的返回结果给测试期间发生的函数调用。通常，除了测试中用到的case外，什么也不会返回。
-- **Spy**: 一种的特殊的`Stub`，记录了替身是如何被调用。形如一个邮件服务——记录发送了多少个邮件。
-- **Mock**: 编码了一组期待的调用行为，验证所有的调用符合预期。它将在收到意料之外的调用时产生一个异常。
+- **Dummy** objects are passed around but never actually used. Usually they are just used to fill parameter lists.
+- **Fake** objects actually have working implementations, but usually take some shortcut which makes them not suitable for production (an InMemoryTestDatabase is a good example).
+- **Stubs** provide canned answers to calls made during the test, usually not responding at all to anything outside what's programmed in for the test.
+- **Spies** are stubs that also record some information based on how they were called. One form of this might be an email service that records how many messages it was sent.
+- **Mocks** are pre-programmed with expectations which form a specification of the calls they are expected to receive. They can throw an exception if they receive a call they don't expect and are checked during verification to ensure they got all the calls they were expecting.
 
-尽管这些替身之间看起来有明确的边界，不幸的是，所有测试框架和替身库提供的API都兼具其中的多种测试替身的能力。比如[Jest](https://jestjs.io)框架中的`jest.fn()`, 它可以成为任何一种测试替身：
+While these test doubles have clear boundaries, unfortunately, most testing frameworks and mocking libraries provide APIs that support multiple types of test doubles. For example, the jest.fn() function in the Jest framework can act as any of the test doubles:
 
 - Dummy: `fun(jest.fn())`
 - Fake: `{ generateUuid: jest.fn().mockImplementationOnce(randomUUID)}`
 - Stub/Spy: `{ generateUuid: jest.fn().mockReturnValueOnce('a uuid')}`
 - Mock: `expect(jest.fn()).toBeCalledWith('args')`
 
-我曾一度困惑于这些测试框架的api设计，受其影响，认为这些测试提神替身并没有什么实用价值。[^1]
+I was initially confused by the design of these APIs in testing frameworks, and as a result, I didn't see much practical value in using these test doubles. [^1]
 
-渐渐的在运用TDD的过程中我发现，用明确定义的测试来替身描述测试策略尤其好用
+However, as I gradually applied TDD in my development process, I discovered that using well-defined test doubles to describe testing strategies is especially beneficial.
 
-## TDD下的用武之地
+## Application in TDD
 
-众所周知，TDD的基本步骤：
+As we know, TDD follows a basic cycle:
 
 ```mermaid
 flowchart LR
@@ -32,16 +32,19 @@ flowchart LR
   refactor --> failedTest
 ```
 
-实践TDD时你会发现，编写一个失败的测试常常是困难的，原因可能是：
+In this article, I won't discuss the value of TDD itself, but in terms of its pain points, I found that writing a failing test is not always easy. Here are some reasons why:
 
-### 1. 没有按照架构进行任务分解
-架构是上层设计，先于以上四个编程活动存在。不论你不加权衡的选择某种广泛使用的架构，还是通过小心的权衡决策出的架构，都是在和你的技术团队达成一种协定：我们应当以这种方式实现业务价值，因为这种方式具有怎样地好处。任务分解若没有遵守架构约定，就难以将task转化为对应的测试。
-### 2. 过大的任务
-为过大任务编写的测试通常是无效的测试，在实现过程中会引入太多的外部依赖和过多的副作用，导致测试频繁的修改。
+### Lack of architectural breakdown in tasking
 
-以上的两大原因都将矛头指向了糟糕的Tasking，实践中不难发现，基于架构和测试策略进行Tasking是一种确保正确生成任务列表地方式：**为了实现当前的架构组件，使用测试替身替换其依赖的架构组件，给定一个特定的输入，期待一个正确的输出。**
+Architecture is the higher-level design that exists before the four aforementioned programming activities. Whether you choose a widely used architecture without careful consideration or make architectural decisions through thoughtful deliberation, it is an agreement with your team: "We should implement business value in this way because it offers certain benefits." If the tasking does not follow the architecture, translating the task into corresponding tests that meet the requirements can be challenging.
 
-考虑在一个简单的分层架构下，实现从丰巢快递柜中取一个快递：
+### Oversized tasks
+
+Tests written for oversized tasks are often ineffective, introducing excessive external dependencies and side effects during the implementation process, resulting in a significant workload in writing the tests themselves.
+
+I believe that a well-defined, testable, architecture-compliant set of tasks can make it easier for developers to write failing tests. Through long-term practice, I have found that tasking based on architecture and testing strategies is a way to ensure the generation of a correct task list: **To implement a target unit, use test doubles to replace its dependencies, provide a specific input, and expect a correct output.**
+
+Let's compare two styles of tasking using an example in a common layered architecture, involving taking a package from a smart locker:
 
 ```mermaid
 flowchart LR
@@ -50,42 +53,48 @@ flowchart LR
 api: patch /slot/{code}
 table: {"code": "324156", "id": "slotId1"} --> {"code": null, "id": "slotId1"}
 
-#### 只考虑架构的Tasking：
+### Tasking based on architecture only
 
-- controller: 调用slotService，controller返回：{status: 200 body: "取包成功"}
+- controller: Invoke slotService, and the controller returns: {status: 200, body: "Package retrieval successful"}
 
-- service： 调用 SlotRepository findByCode/save 更新数据， service返回 "取包成功"
+- service： Invoke SlotRepository's findByCode/save methods to update data, and the service returns "Package retrieval successful"
 
-- repository： 使用JPA，正确命名方法 findByCode
+- repository： Use JPA with the correctly named methods findByCode
 
-不同的人在将controller层的task转化为测试时，常常能看到相当大的差异，基本分为三种：
+When different people convert the tasks in the controller layer into tests, significant differences can often be observed, mainly falling into three categories:
 
-1. 使用@SpringBootTest，启动一个测试数据库，验证结果
-2. 使用@SpringMVCTest，Mock掉slotService，验证返回结果和service call
-3. 使用普通单元测试调用controller，Mock掉slotService，验证返回结果和service call
+1. Using @SpringBootTest to start a test database and verify the results.
+2. Using @SpringMVCTest to mock the slotService and verify the returned result and service call.
+3. Using regular unit tests to call the controller, mock the slotService, and verify the returned result and service call.
 
-放任这三种测试方式并存，大概会导致混乱的测试代码。
+Allowing these three testing approaches to coexist would likely result in confusing test code. In such a situation, whether the architecture can evolve in the desired direction becomes a concern.
 
-#### 同时考虑架构和测试策略的Tasking：
+### Tasking considering both architecture and testing strategies
 
-### controller
+#### controller
 
-- Given **Stub** slotService call "324156" and return "取包成功"
+- Given **Stub** slotService call "324156" and return "Package retrieval successful"
 - When post /slot/324156 via springMVC
-- Then status: 200 body: "取包成功"
+- Then status: 200 body: "Package retrieval successful"
 
-### service
+#### service
 
 - Given **Mock** SlotRepository findByCode/save call
-- When 取包
-- Then return "取包成功"
+- When retrieval
+- Then return "Package retrieval successful" and Verify that the slotRepository's methods are called with the correct parameters
 
-### repository
+#### repository
 
-- 使用JPA，正确命名方法 findByCode
+- to use JPA interface with a correct naming `findByCode`
 
-不难看出，使用测试替身的描述更为明确。service层使用的测试替身是`Mock`, 这意味着slotService期待slotRepository提供的API是稳定的，不能被轻易的修改。这里的Mock也具有保证正确调用repository的意图，因为JPA的接口命名约定使得函数名不能出错。通常service层是经常变化的，我希望它是容易修改的，比如变更一个函数的参数不会破坏任何的controller代码。使用Mock，意味着你将验证一个具体的行为：“controller将调用slotService并传入参数324156“，这样service的修改将导致诸多controller的测试需要同步修改。使用Stub就会有所改善，只需要修改测试替身，而不用修改任何测试的断言。反过来讲，在controller层使用Stub，意味着我们希望与依赖保持更松散的耦合。
+It is evident that the use of test doubles provides a clearer description. Alternatively, incorporating the testing strategy into tasking makes the task list appear more explicit. Furthermore, such a task list conceals the intentions reflected in the testing strategy:
 
-使用这些细分的测试替身，它们有明确的用途和边界，能够让我们用精简的语言表达测试意图，不失为一种高效的方式。
+In the service layer, the test double used is 'Mock,' which implies that slotService expects a stable API from slotRepository that should not be easily modified. The use of 'Mock' also serves the purpose of ensuring the correct invocation of the repository, as the naming conventions of JPA interfaces make it unlikely for function names to be incorrect. Typically, the service layer undergoes frequent changes, and it is desirable for it to be easily modifiable, such as adding a parameter to a function without breaking any controller code. By using 'Mock,' any modifications to the service layer would require the corresponding modifications in many controller tests, as it verifies a specific behavior: 'the controller calls slotService with the parameter 324156.' This can be improved by using 'Stub,' where only the test double needs to be modified without changing any test assertions. Conversely, using 'Stub' in the controller layer implies a desire for looser coupling with dependencies.
 
-[^1]: 如果从测试工具的api设计角度来看，我还是认为测试框架将多种替身的能力合并到了一起，在大多数情况下都是一个不错的选择。实践中，选择合适的api使用即可，不必纠结。
+Why not just say it directly? Because of [curse of knowledge](https://en.wikipedia.org/wiki/Curse_of_knowledge), which cannot guarantee a correct understanding by the audience. This approach can yield three outcomes:
+
+1. Upon seeing this testing strategy/task, the intention is understood. -- perfect
+2. After using this strategy for a while, the intention is realized. -- great
+3. I may not understand, but following this approach yields objective results that align with the architectural vision. -- not bad
+
+In conclusion, by using these well-defined test doubles, they have relatively clear purposes and boundaries, allowing us to express testing intentions in concise language, making it an efficient approach.
